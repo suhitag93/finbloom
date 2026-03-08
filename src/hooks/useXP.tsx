@@ -1,55 +1,94 @@
-import { useMemo } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import {
   getLevelForXP,
   getNextLevel,
   getLevelProgress,
   getStreakMultiplier,
-  ALL_BADGES,
-  type Badge,
+  LEVELS,
+  type XPLevel,
 } from "@/lib/xp-system";
 
-/**
- * Mock XP hook — simulates XP based on profile completeness.
- * In a real implementation this would query an xp_transactions table.
- */
+export interface Badge {
+  id: string;
+  title: string;
+  emoji: string;
+  description: string;
+  xpBonus: number;
+  category: string;
+  earned: boolean;
+  earnedDate?: string;
+}
+
 export const useXP = () => {
+  const { user } = useAuth();
   const { profile } = useProfile();
+  const [totalXP, setTotalXP] = useState(0);
+  const [badges, setBadges] = useState<Badge[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const data = useMemo(() => {
-    // Simulate XP from onboarding & profile data
-    let xp = 0;
-    if (profile?.onboarding_completed) xp += 100;
-    if (profile?.connected_bank) xp += 200;
-    if (profile?.goals && profile.goals.length > 0) xp += 50;
-    if (profile?.financial_accounts && profile.financial_accounts.length > 0) xp += 50 * profile.financial_accounts.length;
-    // Add mock XP for demo richness
-    xp += 820;
+  const fetchData = useCallback(async () => {
+    if (!user) {
+      setLoading(false);
+      return;
+    }
 
-    const streakDays = 12; // mock
-    const multiplier = getStreakMultiplier(streakDays);
-    const totalXP = Math.round(xp * multiplier);
+    // Use profile xp_points if available (kept in sync by DB trigger)
+    const xp = (profile as any)?.xp_points ?? 0;
+    setTotalXP(xp);
 
-    const currentLevel = getLevelForXP(totalXP);
-    const nextLevel = getNextLevel(totalXP);
-    const progress = getLevelProgress(totalXP);
+    // Fetch all achievements + user's earned ones
+    const [{ data: allAchievements }, { data: userAchievements }] = await Promise.all([
+      supabase.from("achievements").select("*"),
+      supabase.from("user_achievements").select("achievement_id, earned_at").eq("user_id", user.id),
+    ]);
 
-    const badges: Badge[] = ALL_BADGES;
-    const earnedBadges = badges.filter((b) => b.earned);
-    const lockedBadges = badges.filter((b) => !b.earned);
+    const earnedMap = new Map(
+      (userAchievements ?? []).map((ua: any) => [ua.achievement_id, ua.earned_at])
+    );
 
-    return {
-      totalXP,
-      currentLevel,
-      nextLevel,
-      progress,
-      streakDays,
-      multiplier,
-      badges,
-      earnedBadges,
-      lockedBadges,
-    };
-  }, [profile]);
+    const mapped: Badge[] = (allAchievements ?? []).map((a: any) => ({
+      id: a.id,
+      title: a.name,
+      emoji: a.badge_icon ?? "🏆",
+      description: a.description ?? "",
+      xpBonus: a.xp_reward,
+      category: a.category,
+      earned: earnedMap.has(a.id),
+      earnedDate: earnedMap.get(a.id),
+    }));
 
-  return data;
+    setBadges(mapped);
+    setLoading(false);
+  }, [user, profile]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const currentLevel = getLevelForXP(totalXP);
+  const nextLevel = getNextLevel(totalXP);
+  const progress = getLevelProgress(totalXP);
+
+  const streakDays = 12; // TODO: implement streak tracking
+  const multiplier = getStreakMultiplier(streakDays);
+
+  const earnedBadges = badges.filter((b) => b.earned);
+  const lockedBadges = badges.filter((b) => !b.earned);
+
+  return {
+    totalXP,
+    currentLevel,
+    nextLevel,
+    progress,
+    streakDays,
+    multiplier,
+    badges,
+    earnedBadges,
+    lockedBadges,
+    loading,
+    refetch: fetchData,
+  };
 };
