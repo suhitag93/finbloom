@@ -1,13 +1,24 @@
 import { motion } from "framer-motion";
 import { Target } from "lucide-react";
 
-const goals = [
-  { name: "Emergency Fund", current: 1200, target: 5000, emoji: "🛟" },
-  { name: "Credit Card Payoff", current: 1500, target: 4000, emoji: "💳" },
-  { name: "Home Down Payment", current: 10000, target: 40000, emoji: "🏠" },
-];
+const goalMeta: Record<string, { name: string; emoji: string; target: number }> = {
+  emergency_fund: { name: "Emergency Fund", emoji: "🛟", target: 5000 },
+  pay_debt: { name: "Pay Off Debt", emoji: "💳", target: 4000 },
+  start_investing: { name: "Start Investing", emoji: "📈", target: 2000 },
+  buy_home: { name: "Home Down Payment", emoji: "🏠", target: 40000 },
+  retirement: { name: "Retirement", emoji: "🏖️", target: 50000 },
+  grow_income: { name: "Grow Income", emoji: "💰", target: 10000 },
+};
 
-const GoalTracker = () => {
+interface Props {
+  goals?: string[] | null;
+}
+
+const GoalTracker = ({ goals }: Props) => {
+  const userGoals = (goals || ["emergency_fund", "pay_debt"]).map((g) => ({
+    ...(goalMeta[g] || { name: g, emoji: "🎯", target: 5000 }),
+    current: Math.round(Math.random() * 1500 + 500), // placeholder progress
+  }));
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -21,7 +32,7 @@ const GoalTracker = () => {
       </div>
 
       <div className="space-y-5">
-        {goals.map((goal, i) => {
+        {userGoals.map((goal, i) => {
           const pct = Math.round((goal.current / goal.target) * 100);
           return (
             <div key={goal.name}>

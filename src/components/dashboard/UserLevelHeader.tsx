@@ -1,10 +1,23 @@
 import { motion } from "framer-motion";
 import { Flame, Zap } from "lucide-react";
+import type { Tables } from "@/integrations/supabase/types";
 
-const UserLevelHeader = () => {
+interface Props {
+  firstName: string;
+  profile: Tables<"profiles"> | null;
+}
+
+const confidenceLevelMap: Record<string, { label: string; emoji: string }> = {
+  beginner: { label: "Sprout", emoji: "🌱" },
+  intermediate: { label: "Bloom", emoji: "🌸" },
+  advanced: { label: "Canopy", emoji: "🌳" },
+};
+
+const UserLevelHeader = ({ firstName, profile }: Props) => {
   const xp = 420;
   const xpMax = 1000;
   const pct = Math.round((xp / xpMax) * 100);
+  const level = confidenceLevelMap[profile?.financial_confidence || "beginner"] || confidenceLevelMap.beginner;
 
   return (
     <motion.div
@@ -16,11 +29,11 @@ const UserLevelHeader = () => {
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-4">
         <div>
           <h1 className="font-display text-3xl md:text-4xl font-semibold text-foreground mb-1">
-            Welcome back, Sarah 🌸
+            Welcome back, {firstName} 🌸
           </h1>
           <div className="flex items-center gap-3 text-muted-foreground text-sm">
             <span className="inline-flex items-center gap-1 font-medium text-primary">
-              🌿 Sprout
+              {level.emoji} {level.label}
             </span>
             <span className="text-border">•</span>
             <span className="inline-flex items-center gap-1">
@@ -28,7 +41,7 @@ const UserLevelHeader = () => {
               12-day streak
             </span>
             <span className="text-border">•</span>
-            <span>Personality: Planner 📋</span>
+            <span>Personality: {profile?.employment_type === "freelance" ? "Hustler 🚀" : "Planner 📋"}</span>
           </div>
         </div>
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium">
