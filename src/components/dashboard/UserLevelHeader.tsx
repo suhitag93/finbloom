@@ -1,23 +1,9 @@
 import { motion } from "framer-motion";
-import { Flame, Zap } from "lucide-react";
-import type { Tables } from "@/integrations/supabase/types";
+import { Flame, Zap, TrendingUp } from "lucide-react";
+import { useXP } from "@/hooks/useXP";
 
-interface Props {
-  firstName: string;
-  profile: Tables<"profiles"> | null;
-}
-
-const confidenceLevelMap: Record<string, { label: string; emoji: string }> = {
-  beginner: { label: "Sprout", emoji: "🌱" },
-  intermediate: { label: "Bloom", emoji: "🌸" },
-  advanced: { label: "Canopy", emoji: "🌳" },
-};
-
-const UserLevelHeader = ({ firstName, profile }: Props) => {
-  const xp = 420;
-  const xpMax = 1000;
-  const pct = Math.round((xp / xpMax) * 100);
-  const level = confidenceLevelMap[profile?.financial_confidence || "beginner"] || confidenceLevelMap.beginner;
+const UserLevelHeader = ({ firstName }: { firstName: string }) => {
+  const { totalXP, currentLevel, nextLevel, progress, streakDays, multiplier } = useXP();
 
   return (
     <motion.div
@@ -29,24 +15,33 @@ const UserLevelHeader = ({ firstName, profile }: Props) => {
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-4">
         <div>
           <h1 className="font-display text-3xl md:text-4xl font-semibold text-foreground mb-1">
-            Welcome back, {firstName} 🌸
+            Welcome back, {firstName} {currentLevel.emoji}
           </h1>
-          <div className="flex items-center gap-3 text-muted-foreground text-sm">
+          <div className="flex items-center gap-3 text-muted-foreground text-sm flex-wrap">
             <span className="inline-flex items-center gap-1 font-medium text-primary">
-              {level.emoji} {level.label}
+              {currentLevel.emoji} {currentLevel.title}
             </span>
             <span className="text-border">•</span>
             <span className="inline-flex items-center gap-1">
               <Flame className="w-3.5 h-3.5 text-destructive" />
-              12-day streak
+              {streakDays}-day streak
             </span>
+            {multiplier > 1 && (
+              <>
+                <span className="text-border">•</span>
+                <span className="inline-flex items-center gap-1 text-success font-medium">
+                  <TrendingUp className="w-3.5 h-3.5" />
+                  {multiplier}x XP
+                </span>
+              </>
+            )}
             <span className="text-border">•</span>
-            <span>Personality: {profile?.employment_type === "freelance" ? "Hustler 🚀" : "Planner 📋"}</span>
+            <span className="text-muted-foreground">{currentLevel.focus}</span>
           </div>
         </div>
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium">
           <Zap className="w-3.5 h-3.5" />
-          {xp} XP
+          {totalXP.toLocaleString()} XP
         </div>
       </div>
 
@@ -56,12 +51,14 @@ const UserLevelHeader = ({ firstName, profile }: Props) => {
           <motion.div
             className="h-full rounded-full bg-gradient-bloom"
             initial={{ width: 0 }}
-            animate={{ width: `${pct}%` }}
+            animate={{ width: `${progress}%` }}
             transition={{ duration: 1, ease: "easeOut" }}
           />
         </div>
         <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">
-          {xp} / {xpMax} XP → Bloom 🌸
+          {nextLevel
+            ? `${totalXP.toLocaleString()} / ${nextLevel.xpRequired.toLocaleString()} XP → ${nextLevel.title} ${nextLevel.emoji}`
+            : `${totalXP.toLocaleString()} XP — Max Level! 👑`}
         </span>
       </div>
     </motion.div>

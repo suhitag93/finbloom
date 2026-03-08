@@ -1,14 +1,20 @@
 import { motion } from "framer-motion";
 import { Zap, CheckCircle2, Circle } from "lucide-react";
+import { useXP } from "@/hooks/useXP";
 
 const missions = [
-  { title: "Build $1,000 emergency fund", xp: 200, progress: 64, active: true },
-  { title: "Reduce subscriptions to under $50", xp: 100, progress: 30, active: true },
-  { title: "Save $200 this month", xp: 150, progress: 85, active: true },
-  { title: "Track spending for 7 days", xp: 75, progress: 100, active: false },
+  { title: "Build $1,000 emergency fund", xp: 200, progress: 64, category: "saving" },
+  { title: "Reduce subscriptions to under $50", xp: 100, progress: 30, category: "saving" },
+  { title: "Save $200 this month", xp: 150, progress: 85, category: "saving" },
+  { title: "Track spending for 7 days", xp: 75, progress: 100, category: "engagement" },
+  { title: "Increase savings rate by 3%", xp: 120, progress: 15, category: "saving" },
 ];
 
 const GamifiedMissions = () => {
+  const { currentLevel } = useXP();
+  const activeMissions = missions.filter((m) => m.progress < 100);
+  const totalAvailableXP = activeMissions.reduce((sum, m) => sum + m.xp, 0);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -16,13 +22,16 @@ const GamifiedMissions = () => {
       transition={{ duration: 0.5, delay: 0.3 }}
       className="p-6 rounded-2xl bg-card shadow-card border border-border/50"
     >
-      <div className="flex items-center justify-between mb-5">
+      <div className="flex items-center justify-between mb-1">
         <h3 className="font-display text-lg font-semibold text-foreground">Active Missions</h3>
         <div className="flex items-center gap-1 text-xs font-medium text-accent">
           <Zap className="w-3.5 h-3.5" />
-          525 XP available
+          {totalAvailableXP} XP available
         </div>
       </div>
+      <p className="text-[11px] text-muted-foreground mb-4">
+        {currentLevel.title}-level missions • Complete to earn XP and level up
+      </p>
 
       <div className="space-y-3">
         {missions.map((mission, i) => {
