@@ -137,6 +137,27 @@ const Auth = () => {
           }))
         );
       }
+
+      // Seed mock connected accounts
+      const { data: existingAccounts } = await supabase.from("accounts").select("id").eq("user_id", userId).limit(1);
+      if (!existingAccounts || existingAccounts.length === 0) {
+        const { data: insts } = await supabase.from("institutions").select("id, name");
+        if (insts) {
+          const find = (name: string) => insts.find((i: any) => i.name === name)?.id;
+          const marcusId = find("Marcus by Goldman Sachs");
+          const chaseId = find("Chase");
+          const vanguardId = find("Vanguard");
+          const accountInserts = [
+            marcusId && { user_id: userId, institution_id: marcusId, nickname: "Emergency Savings", account_type: "savings", balance: 8400 },
+            chaseId && { user_id: userId, institution_id: chaseId, nickname: "Checking", account_type: "checking", balance: 3200 },
+            chaseId && { user_id: userId, institution_id: chaseId, nickname: "Freedom Card", account_type: "credit_card", balance: -1450 },
+            vanguardId && { user_id: userId, institution_id: vanguardId, nickname: "Roth IRA", account_type: "retirement", balance: 24200 },
+          ].filter(Boolean);
+          if (accountInserts.length > 0) {
+            await supabase.from("accounts").insert(accountInserts);
+          }
+        }
+      }
     }
   };
 
