@@ -4,6 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/AppSidebar";
 import Navbar from "@/components/Navbar";
 import LandingPage from "./pages/LandingPage";
 import Auth from "./pages/Auth";
@@ -21,9 +23,25 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+const SidebarLayout = ({ children }: { children: React.ReactNode }) => (
+  <SidebarProvider>
+    <div className="min-h-screen flex w-full">
+      <AppSidebar />
+      <div className="flex-1 flex flex-col">
+        <header className="h-12 flex items-center border-b border-border/50 bg-background/80 backdrop-blur-md md:hidden">
+          <SidebarTrigger className="ml-3" />
+          <span className="ml-2 font-display text-sm font-semibold text-foreground">FinBloom</span>
+        </header>
+        <main className="flex-1">{children}</main>
+      </div>
+    </div>
+  </SidebarProvider>
+);
+
 const AppLayout = () => {
   const location = useLocation();
-  const hideNav = ["/onboarding", "/auth"].includes(location.pathname);
+  const showSidebar = ["/dashboard", "/settings"].includes(location.pathname);
+  const hideNav = showSidebar || ["/onboarding", "/auth"].includes(location.pathname);
 
   return (
     <>
@@ -43,7 +61,9 @@ const AppLayout = () => {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <SidebarLayout>
+                <Dashboard />
+              </SidebarLayout>
             </ProtectedRoute>
           }
         />
@@ -51,7 +71,9 @@ const AppLayout = () => {
           path="/settings"
           element={
             <ProtectedRoute>
-              <Settings />
+              <SidebarLayout>
+                <Settings />
+              </SidebarLayout>
             </ProtectedRoute>
           }
         />
