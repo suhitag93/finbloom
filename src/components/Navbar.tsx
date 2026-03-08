@@ -1,8 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
-import { Sprout, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
+import FinBloomIcon from "@/components/FinBloomIcon";
 
 const Navbar = () => {
   const location = useLocation();
