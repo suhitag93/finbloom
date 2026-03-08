@@ -1,6 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import WelcomeStep from "@/components/onboarding/WelcomeStep";
+import PersonalInfoStep from "@/components/onboarding/PersonalInfoStep";
 import DemographicsStep from "@/components/onboarding/DemographicsStep";
 import FinancialProfileStep from "@/components/onboarding/FinancialProfileStep";
 import BankConnectionStep from "@/components/onboarding/BankConnectionStep";
@@ -9,6 +13,8 @@ import GoalsStep from "@/components/onboarding/GoalsStep";
 import GamifiedWelcomeStep from "@/components/onboarding/GamifiedWelcomeStep";
 
 export interface OnboardingData {
+  fullName: string;
+  dateOfBirth: string;
   ageGroup: string;
   incomeRange: string;
   employmentType: string;
@@ -20,11 +26,15 @@ export interface OnboardingData {
   goals: string[];
 }
 
-const TOTAL_STEPS = 7;
+const TOTAL_STEPS = 8;
 
 const Onboarding = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [data, setData] = useState<OnboardingData>({
+    fullName: "",
+    dateOfBirth: "",
     ageGroup: "",
     incomeRange: "",
     employmentType: "",
@@ -52,6 +62,25 @@ const Onboarding = () => {
     return 0;
   };
 
+  const handleComplete = async () => {
+    if (!user) return;
+    await supabase.from("profiles").update({
+      full_name: data.fullName,
+      date_of_birth: data.dateOfBirth || null,
+      age_group: data.ageGroup,
+      income_range: data.incomeRange,
+      employment_type: data.employmentType,
+      location_type: data.locationType,
+      household: data.household,
+      financial_confidence: data.financialConfidence,
+      financial_accounts: data.financialAccounts,
+      connected_bank: data.connectedBank,
+      goals: data.goals,
+      onboarding_completed: true,
+    }).eq("user_id", user.id);
+    navigate("/dashboard");
+  };
+
   const stepVariants = {
     enter: { opacity: 0, x: 40 },
     center: { opacity: 1, x: 0 },
@@ -60,7 +89,6 @@ const Onboarding = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Progress bar */}
       {step > 0 && step < TOTAL_STEPS - 1 && (
         <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-muted">
           <motion.div
@@ -85,22 +113,25 @@ const Onboarding = () => {
           >
             {step === 0 && <WelcomeStep onNext={next} />}
             {step === 1 && (
-              <DemographicsStep data={data} update={update} onNext={next} onBack={back} />
+              <PersonalInfoStep data={data} update={update} onNext={next} onBack={back} />
             )}
             {step === 2 && (
-              <FinancialProfileStep data={data} update={update} onNext={next} onBack={back} />
+              <DemographicsStep data={data} update={update} onNext={next} onBack={back} />
             )}
             {step === 3 && (
-              <BankConnectionStep data={data} update={update} onNext={next} onBack={back} />
+              <FinancialProfileStep data={data} update={update} onNext={next} onBack={back} />
             )}
             {step === 4 && (
-              <HealthScoreStep data={data} onNext={next} onBack={back} />
+              <BankConnectionStep data={data} update={update} onNext={next} onBack={back} />
             )}
             {step === 5 && (
-              <GoalsStep data={data} update={update} onNext={next} onBack={back} />
+              <HealthScoreStep data={data} onNext={next} onBack={back} />
             )}
             {step === 6 && (
-              <GamifiedWelcomeStep level={computeLevel()} data={data} />
+              <GoalsStep data={data} update={update} onNext={next} onBack={back} />
+            )}
+            {step === 7 && (
+              <GamifiedWelcomeStep level={computeLevel()} data={data} onComplete={handleComplete} />
             )}
           </motion.div>
         </AnimatePresence>

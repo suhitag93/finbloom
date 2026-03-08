@@ -14,7 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          age_group: string | null
+          connected_bank: boolean | null
+          created_at: string
+          date_of_birth: string | null
+          employment_type: string | null
+          financial_accounts: string[] | null
+          financial_confidence: string | null
+          full_name: string | null
+          goals: string[] | null
+          household: string | null
+          id: string
+          income_range: string | null
+          location_type: string | null
+          onboarding_completed: boolean | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          age_group?: string | null
+          connected_bank?: boolean | null
+          created_at?: string
+          date_of_birth?: string | null
+          employment_type?: string | null
+          financial_accounts?: string[] | null
+          financial_confidence?: string | null
+          full_name?: string | null
+          goals?: string[] | null
+          household?: string | null
+          id?: string
+          income_range?: string | null
+          location_type?: string | null
+          onboarding_completed?: boolean | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          age_group?: string | null
+          connected_bank?: boolean | null
+          created_at?: string
+          date_of_birth?: string | null
+          employment_type?: string | null
+          financial_accounts?: string[] | null
+          financial_confidence?: string | null
+          full_name?: string | null
+          goals?: string[] | null
+          household?: string | null
+          id?: string
+          income_range?: string | null
+          location_type?: string | null
+          onboarding_completed?: boolean | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
