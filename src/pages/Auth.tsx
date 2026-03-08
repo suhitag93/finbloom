@@ -76,35 +76,54 @@ const Auth = () => {
     const demoPassword = "demo1234";
     try {
       // Try signing in first
-      const { error: signInError } = await supabase.auth.signInWithPassword({
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email: demoEmail,
         password: demoPassword,
       });
-      if (signInError) {
-        // Account doesn't exist yet — create it
-        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-          email: demoEmail,
-          password: demoPassword,
-        });
-        if (signUpError) throw signUpError;
+      if (!signInError && signInData.user) {
+        // Existing demo account — ensure profile is seeded
+        await supabase.from("profiles").upsert({
+          user_id: signInData.user.id,
+          full_name: "Alex Bloom",
+          age_group: "25-34",
+          income_range: "$40k-$60k",
+          employment_type: "full_time",
+          location_type: "urban",
+          household: "single",
+          financial_confidence: "somewhat",
+          financial_accounts: ["checking", "savings"],
+          connected_bank: true,
+          goals: ["emergency_fund", "pay_debt", "save_for_vacation"],
+          onboarding_completed: true,
+        }, { onConflict: "user_id" });
+        navigate("/dashboard");
+        return;
+      }
 
-        // Seed Sprout-level profile data
-        if (signUpData.user) {
-          await supabase.from("profiles").upsert({
-            user_id: signUpData.user.id,
-            full_name: "Alex Bloom",
-            age_group: "25-34",
-            income_range: "$40k-$60k",
-            employment_type: "full_time",
-            location_type: "urban",
-            household: "single",
-            financial_confidence: "somewhat",
-            financial_accounts: ["checking", "savings"],
-            connected_bank: true,
-            goals: ["emergency_fund", "pay_debt", "save_for_vacation"],
-            onboarding_completed: true,
-          }, { onConflict: "user_id" });
-        }
+      // Account doesn't exist yet — create it
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+        email: demoEmail,
+        password: demoPassword,
+      });
+      if (signUpError) throw signUpError;
+
+      // Seed Sprout-level profile data
+      if (signUpData.user) {
+        await supabase.from("profiles").upsert({
+          user_id: signUpData.user.id,
+          full_name: "Alex Bloom",
+          age_group: "25-34",
+          income_range: "$40k-$60k",
+          employment_type: "full_time",
+          location_type: "urban",
+          household: "single",
+          financial_confidence: "somewhat",
+          financial_accounts: ["checking", "savings"],
+          connected_bank: true,
+          goals: ["emergency_fund", "pay_debt", "save_for_vacation"],
+          onboarding_completed: true,
+        }, { onConflict: "user_id" });
+        navigate("/dashboard");
       }
     } catch (error: any) {
       toast.error(error.message);
