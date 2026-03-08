@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Lock, Sparkles } from "lucide-react";
 import { useXP } from "@/hooks/useXP";
-import { Badge } from "@/lib/xp-system";
+import type { Badge } from "@/hooks/useXP";
 import { useState } from "react";
 
 const categoryLabels: Record<string, string> = {

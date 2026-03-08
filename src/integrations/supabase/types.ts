@@ -14,6 +14,69 @@ export type Database = {
   }
   public: {
     Tables: {
+      achievements: {
+        Row: {
+          badge_icon: string | null
+          category: string
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          xp_reward: number
+        }
+        Insert: {
+          badge_icon?: string | null
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          xp_reward?: number
+        }
+        Update: {
+          badge_icon?: string | null
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          xp_reward?: number
+        }
+        Relationships: []
+      }
+      missions: {
+        Row: {
+          created_at: string
+          description: string | null
+          difficulty: string
+          id: string
+          is_active: boolean
+          mission_type: string
+          title: string
+          xp_reward: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          difficulty?: string
+          id?: string
+          is_active?: boolean
+          mission_type?: string
+          title: string
+          xp_reward?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          difficulty?: string
+          id?: string
+          is_active?: boolean
+          mission_type?: string
+          title?: string
+          xp_reward?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           age_group: string | null
@@ -23,6 +86,9 @@ export type Database = {
           employment_type: string | null
           financial_accounts: string[] | null
           financial_confidence: string | null
+          financial_personality: string | null
+          financial_score: number | null
+          finbloom_level: number
           full_name: string | null
           goals: string[] | null
           household: string | null
@@ -32,6 +98,7 @@ export type Database = {
           onboarding_completed: boolean | null
           updated_at: string
           user_id: string
+          xp_points: number
         }
         Insert: {
           age_group?: string | null
@@ -41,6 +108,9 @@ export type Database = {
           employment_type?: string | null
           financial_accounts?: string[] | null
           financial_confidence?: string | null
+          financial_personality?: string | null
+          financial_score?: number | null
+          finbloom_level?: number
           full_name?: string | null
           goals?: string[] | null
           household?: string | null
@@ -50,6 +120,7 @@ export type Database = {
           onboarding_completed?: boolean | null
           updated_at?: string
           user_id: string
+          xp_points?: number
         }
         Update: {
           age_group?: string | null
@@ -59,6 +130,9 @@ export type Database = {
           employment_type?: string | null
           financial_accounts?: string[] | null
           financial_confidence?: string | null
+          financial_personality?: string | null
+          financial_score?: number | null
+          finbloom_level?: number
           full_name?: string | null
           goals?: string[] | null
           household?: string | null
@@ -68,6 +142,104 @@ export type Database = {
           onboarding_completed?: boolean | null
           updated_at?: string
           user_id?: string
+          xp_points?: number
+        }
+        Relationships: []
+      }
+      user_achievements: {
+        Row: {
+          achievement_id: string
+          earned_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          achievement_id: string
+          earned_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          achievement_id?: string
+          earned_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_achievements_achievement_id_fkey"
+            columns: ["achievement_id"]
+            isOneToOne: false
+            referencedRelation: "achievements"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_missions: {
+        Row: {
+          completed: boolean
+          completed_at: string | null
+          id: string
+          mission_id: string
+          progress_value: number
+          started_at: string
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          completed_at?: string | null
+          id?: string
+          mission_id: string
+          progress_value?: number
+          started_at?: string
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          completed_at?: string | null
+          id?: string
+          mission_id?: string
+          progress_value?: number
+          started_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_missions_mission_id_fkey"
+            columns: ["mission_id"]
+            isOneToOne: false
+            referencedRelation: "missions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      xp_ledger: {
+        Row: {
+          created_at: string
+          id: string
+          reason: string
+          source_id: string | null
+          source_type: string
+          user_id: string
+          xp_amount: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          reason: string
+          source_id?: string | null
+          source_type: string
+          user_id: string
+          xp_amount: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          reason?: string
+          source_id?: string | null
+          source_type?: string
+          user_id?: string
+          xp_amount?: number
         }
         Relationships: []
       }

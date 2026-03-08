@@ -1,19 +1,25 @@
 import { motion } from "framer-motion";
 import { Zap, CheckCircle2, Circle } from "lucide-react";
 import { useXP } from "@/hooks/useXP";
-
-const missions = [
-  { title: "Build $1,000 emergency fund", xp: 200, progress: 64, category: "saving" },
-  { title: "Reduce subscriptions to under $50", xp: 100, progress: 30, category: "saving" },
-  { title: "Save $200 this month", xp: 150, progress: 85, category: "saving" },
-  { title: "Track spending for 7 days", xp: 75, progress: 100, category: "engagement" },
-  { title: "Increase savings rate by 3%", xp: 120, progress: 15, category: "saving" },
-];
+import { useMissions } from "@/hooks/useMissions";
 
 const GamifiedMissions = () => {
   const { currentLevel } = useXP();
-  const activeMissions = missions.filter((m) => m.progress < 100);
-  const totalAvailableXP = activeMissions.reduce((sum, m) => sum + m.xp, 0);
+  const { missions, activeMissions, loading } = useMissions();
+  const totalAvailableXP = activeMissions.reduce((sum, m) => sum + m.xp_reward, 0);
+
+  if (loading) {
+    return (
+      <div className="p-6 rounded-2xl bg-card shadow-card border border-border/50 animate-pulse">
+        <div className="h-6 bg-secondary rounded w-1/3 mb-4" />
+        <div className="space-y-3">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-14 bg-secondary/50 rounded-xl" />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -35,10 +41,10 @@ const GamifiedMissions = () => {
 
       <div className="space-y-3">
         {missions.map((mission, i) => {
-          const done = mission.progress >= 100;
+          const done = mission.completed;
           return (
             <motion.div
-              key={mission.title}
+              key={mission.id}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.4 + i * 0.08 }}
@@ -57,7 +63,7 @@ const GamifiedMissions = () => {
                 <p className={`text-sm ${done ? "text-primary line-through" : "text-foreground"}`}>
                   {mission.title}
                 </p>
-                {!done && (
+                {!done && mission.progress > 0 && (
                   <div className="flex items-center gap-2 mt-1.5">
                     <div className="flex-1 h-1.5 rounded-full bg-secondary overflow-hidden">
                       <div
@@ -69,7 +75,7 @@ const GamifiedMissions = () => {
                   </div>
                 )}
               </div>
-              <span className="text-xs font-medium text-accent whitespace-nowrap">+{mission.xp} XP</span>
+              <span className="text-xs font-medium text-accent whitespace-nowrap">+{mission.xp_reward} XP</span>
             </motion.div>
           );
         })}
