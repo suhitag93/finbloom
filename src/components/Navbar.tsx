@@ -28,6 +28,7 @@ const Navbar = () => {
           ) : (
             <>
               <Link to="/dashboard" className={cn("text-sm font-medium transition-colors", location.pathname === "/dashboard" ? "text-foreground" : "text-muted-foreground hover:text-foreground")}>Dashboard</Link>
+              <Link to="/settings" className={cn("text-sm font-medium transition-colors", location.pathname === "/settings" ? "text-foreground" : "text-muted-foreground hover:text-foreground")}>Settings</Link>
             </>
           )}
         </div>
