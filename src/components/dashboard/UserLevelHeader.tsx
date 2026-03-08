@@ -1,10 +1,23 @@
 import { motion } from "framer-motion";
 import { Flame, Zap } from "lucide-react";
+import type { Tables } from "@/integrations/supabase/types";
 
-const UserLevelHeader = () => {
+interface Props {
+  firstName: string;
+  profile: Tables<"profiles"> | null;
+}
+
+const confidenceLevelMap: Record<string, { label: string; emoji: string }> = {
+  beginner: { label: "Sprout", emoji: "🌱" },
+  intermediate: { label: "Bloom", emoji: "🌸" },
+  advanced: { label: "Canopy", emoji: "🌳" },
+};
+
+const UserLevelHeader = ({ firstName, profile }: Props) => {
   const xp = 420;
   const xpMax = 1000;
   const pct = Math.round((xp / xpMax) * 100);
+  const level = confidenceLevelMap[profile?.financial_confidence || "beginner"] || confidenceLevelMap.beginner;
 
   return (
     <motion.div
