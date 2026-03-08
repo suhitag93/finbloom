@@ -1,6 +1,7 @@
-import { Sprout, Shield, Eye, Lock } from "lucide-react";
+import { Shield, Eye, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import FinBloomIcon from "@/components/FinBloomIcon";
 
 interface Props {
   onNext: () => void;
@@ -9,13 +10,13 @@ interface Props {
 const WelcomeStep = ({ onNext }: Props) => (
   <div className="text-center space-y-8">
     <motion.div
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ duration: 0.5, delay: 0.1 }}
-      className="w-20 h-20 rounded-2xl bg-gradient-sage mx-auto flex items-center justify-center shadow-glow"
-    >
-      <Sprout className="w-10 h-10 text-primary-foreground" />
-    </motion.div>
+       initial={{ scale: 0.8, opacity: 0 }}
+       animate={{ scale: 1, opacity: 1 }}
+       transition={{ duration: 0.5, delay: 0.1 }}
+       className="mx-auto flex justify-center shadow-glow"
+     >
+       <FinBloomIcon size="xl" />
+     </motion.div>
 
     <div className="space-y-3">
       <h1 className="font-display text-3xl md:text-4xl font-semibold text-foreground leading-tight">

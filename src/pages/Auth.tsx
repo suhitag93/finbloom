@@ -5,9 +5,10 @@ import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Sprout, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import FinBloomIcon from "@/components/FinBloomIcon";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -180,10 +181,10 @@ const Auth = () => {
         className="w-full max-w-md space-y-8"
       >
         {/* Brand */}
-        <div className="text-center space-y-2">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-sage flex items-center justify-center mx-auto">
-            <Sprout className="w-7 h-7 text-primary-foreground" />
-          </div>
+         <div className="text-center space-y-2">
+           <div className="flex justify-center mx-auto">
+             <FinBloomIcon size="xl" />
+           </div>
           <h1 className="font-display text-3xl font-semibold text-foreground">
             {isLogin ? "Welcome back" : "Start your journey"}
           </h1>
@@ -298,15 +299,15 @@ const Auth = () => {
           </div>
         </div>
         <Button
-          variant="secondary"
-          size="lg"
-          className="w-full"
-          onClick={handleDemoLogin}
-          disabled={loading}
-        >
-          <Sprout className="w-5 h-5 mr-2" />
-          {loading ? "Signing in…" : "Try Demo Account (Sprout 🌿)"}
-        </Button>
+           variant="secondary"
+           size="lg"
+           className="w-full"
+           onClick={handleDemoLogin}
+           disabled={loading}
+         >
+           <FinBloomIcon size="sm" className="mr-2" />
+           {loading ? "Signing in…" : "Try Demo Account (Sprout 🌿)"}
+         </Button>
       </motion.div>
     </div>
   );

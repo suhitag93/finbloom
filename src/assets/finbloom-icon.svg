@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 148 148" width="148" height="148">
+  <defs>
+    <linearGradient id="leafGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9DB8A0"/>
+      <stop offset="100%" style="stop-color:#5B7E5F"/>
+    </linearGradient>
+    <linearGradient id="lavBloom" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C5B3E6"/>
+      <stop offset="100%" style="stop-color:#8B72C8"/>
+    </linearGradient>
+    <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8F0E9"/>
+      <stop offset="100%" style="stop-color:#D4E4D6"/>
+    </linearGradient>
+    <filter id="softDrop" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#3A5A3E" flood-opacity="0.18"/>
+    </filter>
+    <filter id="glowPetal">
+      <feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#8B72C8" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background rounded square -->
+  <rect x="8" y="8" width="132" height="132" rx="28" ry="28" fill="url(#iconBg)" filter="url(#softDrop)"/>
+  <rect x="8" y="8" width="132" height="132" rx="28" ry="28" fill="none" stroke="#B8CEB9" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- STEM — centered at x=74 -->
+  <path d="M74 128 Q74 96 74 30"
+    stroke="#5B7E5F" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+  <!-- Left lower leaf -->
+  <path d="M74 106 Q44 94 32 68 Q56 64 74 94 Z"
+    fill="url(#leafGreen)" opacity="0.92"/>
+  <path d="M74 106 Q50 86 34 70"
+    stroke="#4A6B4E" stroke-width="1.2" fill="none" opacity="0.4" stroke-linecap="round"/>
+
+  <!-- Right lower leaf (mirrored) -->
+  <path d="M74 106 Q104 94 116 68 Q92 64 74 94 Z"
+    fill="url(#leafGreen)" opacity="0.88"/>
+  <path d="M74 106 Q98 86 114 70"
+    stroke="#4A6B4E" stroke-width="1.2" fill="none" opacity="0.4" stroke-linecap="round"/>
+
+  <!-- Left upper leaf (lavender) -->
+  <path d="M74 74 Q48 60 46 32 Q68 37 74 66 Z"
+    fill="#B8A8DC" opacity="0.85"/>
+  <path d="M74 74 Q54 52 47 34"
+    stroke="#7A62A8" stroke-width="1.2" fill="none" opacity="0.35" stroke-linecap="round"/>
+
+  <!-- Right upper leaf (sage, mirrored) -->
+  <path d="M74 74 Q100 60 102 32 Q80 37 74 66 Z"
+    fill="url(#leafGreen)" opacity="0.85"/>
+  <path d="M74 74 Q94 52 101 34"
+    stroke="#4A6B4E" stroke-width="1.2" fill="none" opacity="0.35" stroke-linecap="round"/>
+
+  <!-- Lavender bloom petals — centered at x=74 -->
+  <ellipse cx="74" cy="32" rx="7" ry="13" fill="url(#lavBloom)" opacity="0.93" filter="url(#glowPetal)"/>
+  <ellipse cx="83" cy="29" rx="6" ry="11" fill="url(#lavBloom)" opacity="0.82" transform="rotate(20, 83, 29)"/>
+  <ellipse cx="65" cy="29" rx="6" ry="11" fill="#A890D4" opacity="0.82" transform="rotate(-20, 65, 29)"/>
+
+  <!-- Center bud -->
+  <circle cx="74" cy="29" r="6" fill="#EDE8F8" opacity="0.78"/>
+  <circle cx="74" cy="29" r="3" fill="#C5B3E6"/>
+
+  <!-- Balanced sparkle dots -->
+  <circle cx="34" cy="58" r="3" fill="#9DB8A0" opacity="0.5"/>
+  <circle cx="114" cy="58" r="3" fill="#C5B3E6" opacity="0.5"/>
+  <circle cx="52" cy="22" r="2" fill="#C5B3E6" opacity="0.45"/>
+  <circle cx="96" cy="22" r="2" fill="#9DB8A0" opacity="0.45"/>
+</svg>
