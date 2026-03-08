@@ -206,7 +206,7 @@ const LandingPage = () => {
                 Start your financial growth journey today. It's free to begin, and you'll wonder why you didn't start sooner.
               </p>
               <Button variant="gold" size="lg" asChild>
-                <Link to="/onboarding" className="gap-2">
+                <Link to="/auth" className="gap-2">
                   Begin Your Journey <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
