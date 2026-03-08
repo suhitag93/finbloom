@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import UserLevelHeader from "@/components/dashboard/UserLevelHeader";
 import FinancialHealthSnapshot from "@/components/dashboard/FinancialHealthSnapshot";
 import SpendingOverview from "@/components/dashboard/SpendingOverview";
@@ -8,13 +10,24 @@ import WeeklyCoaching from "@/components/dashboard/WeeklyCoaching";
 import MonthlyReport from "@/components/dashboard/MonthlyReport";
 import RecommendationCard from "@/components/dashboard/RecommendationCard";
 import NetWorthCard from "@/components/dashboard/NetWorthCard";
-
 import AchievementsBadges from "@/components/dashboard/AchievementsBadges";
 import LevelProgressionMap from "@/components/dashboard/LevelProgressionMap";
 import { useProfile } from "@/hooks/useProfile";
 
 const Dashboard = () => {
   const { profile, loading, firstName } = useProfile();
+  const location = useLocation();
+
+  // Scroll to section when hash changes
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      // Small delay to allow render
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    }
+  }, [location.hash]);
 
   if (loading) {
     return (
@@ -27,45 +40,39 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen pb-12 px-4 pt-6">
       <div className="container mx-auto max-w-6xl">
-        {/* User Identity + Level */}
         <UserLevelHeader firstName={firstName} />
 
-        {/* Financial Health + Spending */}
         <div className="grid lg:grid-cols-2 gap-6 mb-6">
           <FinancialHealthSnapshot />
           <SpendingOverview />
         </div>
 
-        {/* Growth Garden Goals */}
-        <div className="mb-6">
+        <div id="goals" className="mb-6 scroll-mt-6">
           <GoalTracker goals={profile?.goals} />
         </div>
 
-        {/* Missions */}
-        <div className="grid lg:grid-cols-2 gap-6 mb-6">
+        <div id="missions" className="grid lg:grid-cols-2 gap-6 mb-6 scroll-mt-6">
           <GamifiedMissions />
         </div>
 
-        {/* Level Progression + Achievements */}
-        <div className="grid lg:grid-cols-2 gap-6 mb-6">
+        <div id="achievements" className="grid lg:grid-cols-2 gap-6 mb-6 scroll-mt-6">
           <LevelProgressionMap />
           <AchievementsBadges />
         </div>
 
-        {/* Net Worth + Monthly Report */}
-        <div className="grid lg:grid-cols-2 gap-6 mb-6">
+        <div id="networth" className="grid lg:grid-cols-2 gap-6 mb-6 scroll-mt-6">
           <NetWorthCard />
           <MonthlyReport />
         </div>
 
-        {/* Smart Alerts + Recommendations */}
-        <div className="grid lg:grid-cols-2 gap-6 mb-6">
+        <div id="alerts" className="grid lg:grid-cols-2 gap-6 mb-6 scroll-mt-6">
           <SmartAlerts />
           <RecommendationCard />
         </div>
 
-        {/* Weekly Coaching */}
-        <WeeklyCoaching />
+        <div id="coaching" className="scroll-mt-6">
+          <WeeklyCoaching />
+        </div>
       </div>
     </div>
   );
