@@ -1,11 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
-import { Sprout } from "lucide-react";
+import { Sprout, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
   const location = useLocation();
   const isLanding = location.pathname === "/";
+  const { user, signOut } = useAuth();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
@@ -32,13 +34,23 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          {isLanding ? (
+          {isLanding && !user ? (
             <>
               <Button variant="ghost" size="sm" asChild>
-                <Link to="/dashboard">Log in</Link>
+                <Link to="/auth">Log in</Link>
               </Button>
               <Button variant="hero" size="sm" asChild>
-                <Link to="/onboarding">Get Started</Link>
+                <Link to="/auth">Get Started</Link>
+              </Button>
+            </>
+          ) : user ? (
+            <>
+              <Button variant="ghost" size="sm" asChild>
+                <Link to="/dashboard">Dashboard</Link>
+              </Button>
+              <Button variant="ghost" size="sm" onClick={signOut}>
+                <LogOut className="w-4 h-4 mr-1" />
+                Sign out
               </Button>
             </>
           ) : (
