@@ -47,6 +47,10 @@ const Dashboard = () => {
           <SpendingOverview />
         </div>
 
+        <div id="coaching" className="mb-6 scroll-mt-6">
+          <WeeklyCoaching />
+        </div>
+
         <div id="goals" className="mb-6 scroll-mt-6">
           <GoalTracker goals={profile?.goals} />
         </div>
@@ -68,10 +72,6 @@ const Dashboard = () => {
         <div id="alerts" className="grid lg:grid-cols-2 gap-6 mb-6 scroll-mt-6">
           <SmartAlerts />
           <RecommendationCard />
-        </div>
-
-        <div id="coaching" className="scroll-mt-6">
-          <WeeklyCoaching />
         </div>
       </div>
     </div>
