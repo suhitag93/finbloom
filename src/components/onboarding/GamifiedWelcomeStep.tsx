@@ -77,7 +77,7 @@ const GamifiedWelcomeStep = ({ level, data, onComplete }: Props) => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
       >
-        <Button variant="hero" size="lg" className="w-full text-base" onClick={() => navigate("/dashboard")}>
+        <Button variant="hero" size="lg" className="w-full text-base" onClick={handleContinue}>
           Enter Your Financial Garden 🌿
         </Button>
       </motion.div>
