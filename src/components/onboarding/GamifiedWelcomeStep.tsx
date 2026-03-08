@@ -17,9 +17,17 @@ const levels = [
   { title: "Thrive", emoji: "🌳", tagline: "You're thriving! Let's optimize your path to financial independence", color: "bg-gold-light" },
 ];
 
-const GamifiedWelcomeStep = ({ level, data }: Props) => {
+const GamifiedWelcomeStep = ({ level, data, onComplete }: Props) => {
   const navigate = useNavigate();
   const info = levels[level];
+
+  const handleContinue = () => {
+    if (onComplete) {
+      onComplete();
+    } else {
+      navigate("/dashboard");
+    }
+  };
 
   return (
     <div className="text-center space-y-8">
