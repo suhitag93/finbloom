@@ -32,7 +32,7 @@ const GoalTracker = ({ goals }: Props) => {
       </div>
 
       <div className="space-y-5">
-        {goals.map((goal, i) => {
+        {userGoals.map((goal, i) => {
           const pct = Math.round((goal.current / goal.target) * 100);
           return (
             <div key={goal.name}>
