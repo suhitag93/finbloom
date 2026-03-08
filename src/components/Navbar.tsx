@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { LogOut } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
@@ -28,6 +28,7 @@ const Navbar = () => {
           ) : (
             <>
               <Link to="/dashboard" className={cn("text-sm font-medium transition-colors", location.pathname === "/dashboard" ? "text-foreground" : "text-muted-foreground hover:text-foreground")}>Dashboard</Link>
+              <Link to="/settings" className={cn("text-sm font-medium transition-colors", location.pathname === "/settings" ? "text-foreground" : "text-muted-foreground hover:text-foreground")}>Settings</Link>
             </>
           )}
         </div>
@@ -46,6 +47,9 @@ const Navbar = () => {
             <>
               <Button variant="ghost" size="sm" asChild>
                 <Link to="/dashboard">Dashboard</Link>
+              </Button>
+              <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
+                <Link to="/settings"><Settings className="w-4 h-4" /></Link>
               </Button>
               <Button variant="ghost" size="sm" onClick={signOut}>
                 <LogOut className="w-4 h-4 mr-1" />

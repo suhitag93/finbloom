@@ -14,6 +14,59 @@ export type Database = {
   }
   public: {
     Tables: {
+      accounts: {
+        Row: {
+          account_subtype: string | null
+          account_type: string
+          balance: number
+          created_at: string
+          currency: string
+          id: string
+          institution_id: string
+          is_manual: boolean
+          last_synced_at: string | null
+          nickname: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_subtype?: string | null
+          account_type?: string
+          balance?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          institution_id: string
+          is_manual?: boolean
+          last_synced_at?: string | null
+          nickname: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_subtype?: string | null
+          account_type?: string
+          balance?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          institution_id?: string
+          is_manual?: boolean
+          last_synced_at?: string | null
+          nickname?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "accounts_institution_id_fkey"
+            columns: ["institution_id"]
+            isOneToOne: false
+            referencedRelation: "institutions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       achievements: {
         Row: {
           badge_icon: string | null
@@ -41,6 +94,65 @@ export type Database = {
           id?: string
           name?: string
           xp_reward?: number
+        }
+        Relationships: []
+      }
+      goal_accounts: {
+        Row: {
+          account_id: string
+          created_at: string
+          goal_name: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          account_id: string
+          created_at?: string
+          goal_name: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          account_id?: string
+          created_at?: string
+          goal_name?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "goal_accounts_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      institutions: {
+        Row: {
+          created_at: string
+          id: string
+          institution_type: string
+          logo_url: string | null
+          name: string
+          provider: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          institution_type?: string
+          logo_url?: string | null
+          name: string
+          provider?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          institution_type?: string
+          logo_url?: string | null
+          name?: string
+          provider?: string
         }
         Relationships: []
       }
