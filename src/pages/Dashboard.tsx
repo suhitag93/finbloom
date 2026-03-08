@@ -25,7 +25,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen pt-20 pb-12 px-4">
+    <div className="min-h-screen pb-12 px-4 pt-6">
       <div className="container mx-auto max-w-6xl">
         {/* User Identity + Level */}
         <UserLevelHeader firstName={firstName} />
