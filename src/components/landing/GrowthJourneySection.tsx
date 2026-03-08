@@ -6,7 +6,7 @@ const GrowthJourneySection = () => {
   const displayLevels = LEVELS.slice(0, 5); // Show first 5
 
   return (
-    <section className="py-24 px-4 bg-secondary/30">
+    <section id="growth-journey" className="py-24 px-4 bg-secondary/30">
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
