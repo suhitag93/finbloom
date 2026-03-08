@@ -70,59 +70,98 @@ const Auth = () => {
     }
   };
 
+  const seedDemoData = async (userId: string) => {
+    // Seed profile
+    await supabase.from("profiles").upsert({
+      user_id: userId,
+      full_name: "Alex Bloom",
+      age_group: "25-34",
+      income_range: "$40k-$60k",
+      employment_type: "full_time",
+      location_type: "urban",
+      household: "single",
+      financial_confidence: "somewhat",
+      financial_accounts: ["checking", "savings"],
+      connected_bank: true,
+      goals: ["emergency_fund", "pay_debt", "save_for_vacation"],
+      onboarding_completed: true,
+    }, { onConflict: "user_id" });
+
+    // Seed XP ledger entries to reach Sprout level (~700 XP)
+    const { data: existingXP } = await supabase
+      .from("xp_ledger")
+      .select("id")
+      .eq("user_id", userId)
+      .limit(1);
+
+    if (!existingXP || existingXP.length === 0) {
+      await supabase.from("xp_ledger").insert([
+        { user_id: userId, xp_amount: 100, reason: "Completed onboarding", source_type: "onboarding" },
+        { user_id: userId, xp_amount: 200, reason: "Connected bank accounts", source_type: "banking" },
+        { user_id: userId, xp_amount: 50, reason: "Set financial goals", source_type: "onboarding" },
+        { user_id: userId, xp_amount: 75, reason: "Completed weekly mission", source_type: "mission" },
+        { user_id: userId, xp_amount: 40, reason: "Saved $100", source_type: "saving" },
+        { user_id: userId, xp_amount: 20, reason: "3-day login streak", source_type: "engagement" },
+        { user_id: userId, xp_amount: 50, reason: "First $500 saved", source_type: "achievement" },
+        { user_id: userId, xp_amount: 30, reason: "7-day login streak", source_type: "engagement" },
+        { user_id: userId, xp_amount: 75, reason: "Completed 10 missions", source_type: "achievement" },
+        { user_id: userId, xp_amount: 100, reason: "First credit card paid off", source_type: "achievement" },
+      ]);
+
+      // Seed some earned achievements
+      const { data: achievements } = await supabase
+        .from("achievements")
+        .select("id, name")
+        .in("name", ["First Drop", "Chain Breaker", "Week Warrior", "Mission Maven"]);
+
+      if (achievements && achievements.length > 0) {
+        await supabase.from("user_achievements").insert(
+          achievements.map((a: any) => ({
+            user_id: userId,
+            achievement_id: a.id,
+          }))
+        );
+      }
+
+      // Seed some user mission progress
+      const { data: missionsList } = await supabase.from("missions").select("id, title").limit(5);
+      if (missionsList && missionsList.length > 0) {
+        await supabase.from("user_missions").insert(
+          missionsList.map((m: any, i: number) => ({
+            user_id: userId,
+            mission_id: m.id,
+            progress_value: i === 0 ? 100 : Math.floor(Math.random() * 80),
+            completed: i === 0,
+            completed_at: i === 0 ? new Date().toISOString() : null,
+          }))
+        );
+      }
+    }
+  };
+
   const handleDemoLogin = async () => {
     setLoading(true);
     const demoEmail = "demo@finbloom.app";
     const demoPassword = "demo1234";
     try {
-      // Try signing in first
       const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email: demoEmail,
         password: demoPassword,
       });
       if (!signInError && signInData.user) {
-        // Existing demo account — ensure profile is seeded
-        await supabase.from("profiles").upsert({
-          user_id: signInData.user.id,
-          full_name: "Alex Bloom",
-          age_group: "25-34",
-          income_range: "$40k-$60k",
-          employment_type: "full_time",
-          location_type: "urban",
-          household: "single",
-          financial_confidence: "somewhat",
-          financial_accounts: ["checking", "savings"],
-          connected_bank: true,
-          goals: ["emergency_fund", "pay_debt", "save_for_vacation"],
-          onboarding_completed: true,
-        }, { onConflict: "user_id" });
+        await seedDemoData(signInData.user.id);
         navigate("/dashboard");
         return;
       }
 
-      // Account doesn't exist yet — create it
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: demoEmail,
         password: demoPassword,
       });
       if (signUpError) throw signUpError;
 
-      // Seed Sprout-level profile data
       if (signUpData.user) {
-        await supabase.from("profiles").upsert({
-          user_id: signUpData.user.id,
-          full_name: "Alex Bloom",
-          age_group: "25-34",
-          income_range: "$40k-$60k",
-          employment_type: "full_time",
-          location_type: "urban",
-          household: "single",
-          financial_confidence: "somewhat",
-          financial_accounts: ["checking", "savings"],
-          connected_bank: true,
-          goals: ["emergency_fund", "pay_debt", "save_for_vacation"],
-          onboarding_completed: true,
-        }, { onConflict: "user_id" });
+        await seedDemoData(signUpData.user.id);
         navigate("/dashboard");
       }
     } catch (error: any) {
