@@ -37,7 +37,7 @@ const Dashboard = () => {
 
         {/* Goals + Missions */}
         <div className="grid lg:grid-cols-2 gap-6 mb-6">
-          <GoalTracker />
+          <GoalTracker goals={profile?.goals} />
           <GamifiedMissions />
         </div>
 
