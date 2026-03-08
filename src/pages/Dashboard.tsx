@@ -58,11 +58,6 @@ const Dashboard = () => {
           <MonthlyReport />
         </div>
 
-        {/* Savings Buckets */}
-        <div className="mb-6">
-          <SavingsBuckets />
-        </div>
-
         {/* Smart Alerts + Recommendations */}
         <div className="grid lg:grid-cols-2 gap-6 mb-6">
           <SmartAlerts />
