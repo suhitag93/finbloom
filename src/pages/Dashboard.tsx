@@ -36,9 +36,13 @@ const Dashboard = () => {
           <SpendingOverview />
         </div>
 
-        {/* Goals + Missions */}
-        <div className="grid lg:grid-cols-2 gap-6 mb-6">
+        {/* Growth Garden Goals */}
+        <div className="mb-6">
           <GoalTracker goals={profile?.goals} />
+        </div>
+
+        {/* Missions */}
+        <div className="grid lg:grid-cols-2 gap-6 mb-6">
           <GamifiedMissions />
         </div>
 
