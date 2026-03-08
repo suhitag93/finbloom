@@ -181,10 +181,10 @@ const Auth = () => {
         className="w-full max-w-md space-y-8"
       >
         {/* Brand */}
-        <div className="text-center space-y-2">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-sage flex items-center justify-center mx-auto">
-            <Sprout className="w-7 h-7 text-primary-foreground" />
-          </div>
+         <div className="text-center space-y-2">
+           <div className="flex justify-center mx-auto">
+             <FinBloomIcon size="xl" />
+           </div>
           <h1 className="font-display text-3xl font-semibold text-foreground">
             {isLogin ? "Welcome back" : "Start your journey"}
           </h1>
