@@ -31,19 +31,19 @@ const Dashboard = () => {
     );
   }, []);
 
-  // When hash changes, open that accordion section and scroll to it
+  // When hash changes, open only that accordion section and scroll to it
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.replace("#", "");
       const sectionIds = ["overview", "spending", "growth", "guide"];
       if (sectionIds.includes(id)) {
-        setOpenAccordionIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
+        setOpenAccordionIds([id]);
       }
       setTimeout(() => {
         document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 150);
+      }, 250);
     }
-  }, [location.hash]);
+  }, [location.hash, location.key]);
 
   if (loading) {
     return (
