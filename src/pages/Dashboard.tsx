@@ -7,6 +7,7 @@ import GoalTracker from "@/components/dashboard/GoalTracker";
 import GamifiedMissions from "@/components/dashboard/GamifiedMissions";
 import SmartAlerts from "@/components/dashboard/SmartAlerts";
 import WeeklyCoaching from "@/components/dashboard/WeeklyCoaching";
+import WeeklyCheckIn from "@/components/dashboard/WeeklyCheckIn";
 import MonthlyReport from "@/components/dashboard/MonthlyReport";
 import RecommendationCard from "@/components/dashboard/RecommendationCard";
 import NetWorthCard from "@/components/dashboard/NetWorthCard";
