@@ -5,9 +5,11 @@ import { useAuth } from "@/hooks/useAuth";
 import FinBloomIcon from "@/components/FinBloomIcon";
 import {
   LayoutDashboard,
-  Heart,
-  Zap,
   Sprout,
+  Swords,
+  Trophy,
+  TrendingUp,
+  Bell,
   BookOpen,
   Settings,
   LogOut,
@@ -21,12 +23,20 @@ interface MobileNavDrawerProps {
 
 const navSections = [
   {
-    label: "",
+    label: "Dashboard",
     items: [
-      { title: "Overview", url: "/dashboard#overview", icon: LayoutDashboard },
-      { title: "Spending", url: "/dashboard#spending", icon: Zap },
-      { title: "Growth Garden", url: "/dashboard#growth", icon: Sprout },
-      { title: "Weekly Guide", url: "/dashboard#guide", icon: BookOpen },
+      { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
+      { title: "Growth Garden", url: "/dashboard#goals", icon: Sprout },
+      { title: "Missions", url: "/dashboard#missions", icon: Swords },
+      { title: "Achievements", url: "/dashboard#achievements", icon: Trophy },
+      { title: "Net Worth", url: "/dashboard#networth", icon: TrendingUp },
+    ],
+  },
+  {
+    label: "Insights",
+    items: [
+      { title: "Smart Alerts", url: "/dashboard#alerts", icon: Bell },
+      { title: "Weekly Coaching", url: "/dashboard#coaching", icon: BookOpen },
     ],
   },
 ];
