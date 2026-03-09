@@ -1,5 +1,6 @@
-import { useEffect, useState, lazy, Suspense } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { useLocation } from "react-router-dom";
+import { Heart, Zap, Sprout, BookOpen } from "lucide-react";
 import UserLevelHeader from "@/components/dashboard/UserLevelHeader";
 import FinancialHealthSnapshot from "@/components/dashboard/FinancialHealthSnapshot";
 import GoalTracker from "@/components/dashboard/GoalTracker";
@@ -12,8 +13,9 @@ import RecommendationCard from "@/components/dashboard/RecommendationCard";
 import NetWorthCard from "@/components/dashboard/NetWorthCard";
 import AchievementsBadges from "@/components/dashboard/AchievementsBadges";
 import LevelProgressionMap from "@/components/dashboard/LevelProgressionMap";
-import MobileScorecardTabs from "@/components/dashboard/MobileScorecardTabs";
 import SavingsBuckets from "@/components/dashboard/SavingsBuckets";
+import { MobileDashboardAccordion } from "@/components/dashboard/MobileDashboardAccordion";
+import type { AccordionSection } from "@/components/dashboard/MobileDashboardAccordion";
 import { useProfile } from "@/hooks/useProfile";
 
 const SpendingOverview = lazy(() => import("@/components/dashboard/SpendingOverview"));
@@ -21,7 +23,6 @@ const SpendingOverview = lazy(() => import("@/components/dashboard/SpendingOverv
 const Dashboard = () => {
   const { profile, loading, firstName } = useProfile();
   const location = useLocation();
-  const [scorecardTab, setScorecardTab] = useState("emergency");
 
   // Scroll to section when hash changes
   useEffect(() => {
@@ -41,68 +42,109 @@ const Dashboard = () => {
     );
   }
 
+  const mobileAccordionSections: AccordionSection[] = [
+    {
+      id: "financial-health",
+      label: "Financial Health",
+      emoji: "💚",
+      icon: Heart,
+      children: (
+        <>
+          <FinancialHealthSnapshot />
+          <Suspense fallback={<div className="h-48 rounded-2xl bg-secondary/30 animate-pulse" />}>
+            <SpendingOverview />
+          </Suspense>
+          <NetWorthCard />
+        </>
+      ),
+    },
+    {
+      id: "active-missions",
+      label: "Active Missions",
+      emoji: "⚡",
+      icon: Zap,
+      children: (
+        <>
+          <GamifiedMissions />
+          <RecommendationCard />
+        </>
+      ),
+    },
+    {
+      id: "growth-achievements",
+      label: "Growth Garden & Achievements",
+      emoji: "🌱",
+      icon: Sprout,
+      children: (
+        <>
+          <GoalTracker goals={profile?.goals} />
+          <LevelProgressionMap />
+          <AchievementsBadges />
+        </>
+      ),
+    },
+    {
+      id: "weekly-guide",
+      label: "Weekly Guide",
+      emoji: "📖",
+      icon: BookOpen,
+      children: (
+        <>
+          <WeeklyCoaching />
+          <WeeklyCheckIn />
+          <SmartAlerts />
+          <SavingsBuckets />
+          <MonthlyReport />
+        </>
+      ),
+    },
+  ];
+
   return (
     <div className="min-h-screen pb-12 px-4 pt-4 md:pt-6">
       <div className="container mx-auto max-w-6xl">
-        {/* Welcome header — mobile-optimized typography */}
+        {/* Welcome header */}
         <UserLevelHeader firstName={firstName} />
 
-        {/* Mobile scorecard tabs */}
-        <div id="health" className="mb-4 scroll-mt-4">
-          <MobileScorecardTabs activeTab={scorecardTab} onTabChange={setScorecardTab} />
-        </div>
+        {/* ===== MOBILE: Accordion layout ===== */}
+        <MobileDashboardAccordion sections={mobileAccordionSections} />
 
-        {/* Financial Health + Spending — full-width stacked on mobile */}
-        <div id="spending" className="grid lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6 scroll-mt-4">
-          <FinancialHealthSnapshot />
-          <Suspense fallback={<div className="h-64 rounded-2xl bg-card animate-pulse" />}>
-            <SpendingOverview />
-          </Suspense>
-        </div>
+        {/* ===== DESKTOP: Original grid layout ===== */}
+        <div className="hidden md:block space-y-6">
+          <div id="spending" className="grid lg:grid-cols-2 gap-6 scroll-mt-4">
+            <FinancialHealthSnapshot />
+            <Suspense fallback={<div className="h-64 rounded-2xl bg-card animate-pulse" />}>
+              <SpendingOverview />
+            </Suspense>
+          </div>
 
-        {/* Top priority / Recommendation — shown early on mobile */}
-        <div className="mb-4 md:mb-6 md:hidden">
-          <RecommendationCard />
-        </div>
+          <div id="coaching" className="grid lg:grid-cols-2 gap-6 scroll-mt-6">
+            <WeeklyCoaching />
+            <WeeklyCheckIn />
+          </div>
 
-        {/* Coaching */}
-        <div id="coaching" className="grid lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6 scroll-mt-6">
-          <WeeklyCoaching />
-          <WeeklyCheckIn />
-        </div>
+          <div id="goals" className="scroll-mt-6">
+            <GoalTracker goals={profile?.goals} />
+          </div>
 
-        {/* Goals */}
-        <div id="goals" className="mb-4 md:mb-6 scroll-mt-6">
-          <GoalTracker goals={profile?.goals} />
-        </div>
+          <div id="missions" className="grid lg:grid-cols-2 gap-6 scroll-mt-6">
+            <GamifiedMissions />
+          </div>
 
-        {/* Missions */}
-        <div id="missions" className="grid lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6 scroll-mt-6">
-          <GamifiedMissions />
-        </div>
+          <div id="achievements" className="grid lg:grid-cols-2 gap-6 scroll-mt-6">
+            <LevelProgressionMap />
+            <AchievementsBadges />
+          </div>
 
-        {/* Achievements */}
-        <div id="achievements" className="grid lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6 scroll-mt-6">
-          <LevelProgressionMap />
-          <AchievementsBadges />
-        </div>
+          <div id="networth" className="grid lg:grid-cols-2 gap-6 scroll-mt-6">
+            <NetWorthCard />
+            <MonthlyReport />
+          </div>
 
-        {/* Net Worth + Report */}
-        <div id="networth" className="grid lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6 scroll-mt-6">
-          <NetWorthCard />
-          <MonthlyReport />
-        </div>
-
-        {/* Savings Buckets */}
-        <div className="mb-4 md:mb-6">
           <SavingsBuckets />
-        </div>
 
-        {/* Alerts + Recommendations */}
-        <div id="alerts" className="grid lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6 scroll-mt-6">
-          <SmartAlerts />
-          {/* RecommendationCard already shown on mobile above; show here on desktop */}
-          <div className="hidden md:block">
+          <div id="alerts" className="grid lg:grid-cols-2 gap-6 scroll-mt-6">
+            <SmartAlerts />
             <RecommendationCard />
           </div>
         </div>
