@@ -25,27 +25,18 @@ interface MobileNavDrawerProps {
 
 const navSections = [
   {
-    label: "Dashboard",
+    label: "",
     items: [
       { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
     ],
   },
   {
-    label: "Financial Health",
+    label: "Scorecards",
     items: [
-      { title: "Scorecards", url: "/dashboard#health", icon: Heart },
-      { title: "Emergency Fund", url: "/dashboard#goals", icon: Shield },
-      { title: "Debt Health", url: "/dashboard#networth", icon: Landmark },
-      { title: "Spending", url: "/dashboard#spending", icon: CreditCard },
-      { title: "Investments", url: "/dashboard#networth", icon: TrendingUp },
-    ],
-  },
-  {
-    label: "",
-    items: [
-      { title: "Goals", url: "/dashboard#goals", icon: Target },
-      { title: "Insights", url: "/dashboard#coaching", icon: Lightbulb },
-      { title: "Achievements", url: "/dashboard#achievements", icon: Trophy },
+      { title: "Financial Health", url: "/dashboard#financial-health", icon: Heart, emoji: "💚" },
+      { title: "Active Missions", url: "/dashboard#active-missions", icon: Zap, emoji: "⚡" },
+      { title: "Growth & Achievements", url: "/dashboard#growth-achievements", icon: Sprout, emoji: "🌱" },
+      { title: "Weekly Guide", url: "/dashboard#weekly-guide", icon: BookOpen, emoji: "📖" },
     ],
   },
 ];
