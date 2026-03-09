@@ -1,4 +1,4 @@
-import { useEffect, lazy, Suspense } from "react";
+import { useEffect, useState, useCallback, lazy, Suspense } from "react";
 import { useLocation } from "react-router-dom";
 import { Heart, Zap, Sprout, BookOpen } from "lucide-react";
 import UserLevelHeader from "@/components/dashboard/UserLevelHeader";
@@ -23,14 +23,25 @@ const SpendingOverview = lazy(() => import("@/components/dashboard/SpendingOverv
 const Dashboard = () => {
   const { profile, loading, firstName } = useProfile();
   const location = useLocation();
+  const [openAccordionIds, setOpenAccordionIds] = useState<string[]>(["overview"]);
 
-  // Scroll to section when hash changes
+  const toggleAccordion = useCallback((id: string) => {
+    setOpenAccordionIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  }, []);
+
+  // When hash changes, open that accordion section and scroll to it
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.replace("#", "");
+      const sectionIds = ["overview", "spending", "growth", "guide"];
+      if (sectionIds.includes(id)) {
+        setOpenAccordionIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
+      }
       setTimeout(() => {
         document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 100);
+      }, 150);
     }
   }, [location.hash]);
 
@@ -107,7 +118,7 @@ const Dashboard = () => {
         <UserLevelHeader firstName={firstName} />
 
         {/* ===== MOBILE: Accordion layout ===== */}
-        <MobileDashboardAccordion sections={mobileAccordionSections} />
+        <MobileDashboardAccordion sections={mobileAccordionSections} openIds={openAccordionIds} onToggle={toggleAccordion} />
 
         {/* ===== DESKTOP: Original grid layout ===== */}
         <div className="hidden md:block space-y-6">

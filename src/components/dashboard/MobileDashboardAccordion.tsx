@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Heart, Zap, Sprout, BookOpen } from "lucide-react";
 
@@ -12,17 +11,11 @@ interface AccordionSection {
 
 interface Props {
   sections: AccordionSection[];
+  openIds: string[];
+  onToggle: (id: string) => void;
 }
 
-const MobileDashboardAccordion = ({ sections }: Props) => {
-  // First section open by default
-  const [openIds, setOpenIds] = useState<string[]>([sections[0]?.id ?? ""]);
-
-  const toggle = (id: string) => {
-    setOpenIds((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
-    );
-  };
+const MobileDashboardAccordion = ({ sections, openIds, onToggle }: Props) => {
 
   return (
     <div className="flex flex-col gap-3 md:hidden">
@@ -32,11 +25,12 @@ const MobileDashboardAccordion = ({ sections }: Props) => {
         return (
           <div
             key={section.id}
-            className="rounded-2xl border border-border/50 bg-card shadow-sm overflow-hidden"
+            id={section.id}
+            className="rounded-2xl border border-border/50 bg-card shadow-sm overflow-hidden scroll-mt-20"
           >
             {/* Header */}
             <button
-              onClick={() => toggle(section.id)}
+              onClick={() => onToggle(section.id)}
               className="flex items-center gap-3 w-full px-4 py-3.5 text-left transition-colors hover:bg-secondary/40"
             >
               <div className="flex items-center justify-center w-8 h-8 rounded-xl bg-primary/10">
