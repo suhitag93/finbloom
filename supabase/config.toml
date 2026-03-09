@@ -1,1 +1,4 @@
 project_id = "wxpifygevyofkkankgtu"
+
+[functions.plaid-exchange]
+verify_jwt = false
