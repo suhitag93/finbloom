@@ -118,7 +118,7 @@ const Dashboard = () => {
         <UserLevelHeader firstName={firstName} />
 
         {/* ===== MOBILE: Accordion layout ===== */}
-        <MobileDashboardAccordion sections={mobileAccordionSections} />
+        <MobileDashboardAccordion sections={mobileAccordionSections} openIds={openAccordionIds} onToggle={toggleAccordion} />
 
         {/* ===== DESKTOP: Original grid layout ===== */}
         <div className="hidden md:block space-y-6">
