@@ -44,47 +44,48 @@ const Dashboard = () => {
 
   const mobileAccordionSections: AccordionSection[] = [
     {
-      id: "financial-health",
-      label: "Financial Health",
+      id: "overview",
+      label: "Overview",
       emoji: "💚",
       icon: Heart,
       children: (
         <>
           <FinancialHealthSnapshot />
-          <Suspense fallback={<div className="h-48 rounded-2xl bg-secondary/30 animate-pulse" />}>
-            <SpendingOverview />
-          </Suspense>
           <NetWorthCard />
+          <SmartAlerts />
         </>
       ),
     },
     {
-      id: "active-missions",
-      label: "Active Missions",
-      emoji: "⚡",
+      id: "spending",
+      label: "Spending",
+      emoji: "💳",
       icon: Zap,
       children: (
         <>
-          <GamifiedMissions />
+          <Suspense fallback={<div className="h-48 rounded-2xl bg-secondary/30 animate-pulse" />}>
+            <SpendingOverview />
+          </Suspense>
           <RecommendationCard />
         </>
       ),
     },
     {
-      id: "growth-achievements",
-      label: "Growth Garden & Achievements",
+      id: "growth",
+      label: "Growth Garden",
       emoji: "🌱",
       icon: Sprout,
       children: (
         <>
           <GoalTracker goals={profile?.goals} />
-          <LevelProgressionMap />
+          <SavingsBuckets />
           <AchievementsBadges />
+          <LevelProgressionMap />
         </>
       ),
     },
     {
-      id: "weekly-guide",
+      id: "guide",
       label: "Weekly Guide",
       emoji: "📖",
       icon: BookOpen,
@@ -92,8 +93,7 @@ const Dashboard = () => {
         <>
           <WeeklyCoaching />
           <WeeklyCheckIn />
-          <SmartAlerts />
-          <SavingsBuckets />
+          <GamifiedMissions />
           <MonthlyReport />
         </>
       ),
