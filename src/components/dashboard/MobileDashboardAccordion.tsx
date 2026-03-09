@@ -26,7 +26,8 @@ const MobileDashboardAccordion = ({ sections, openIds, onToggle }: Props) => {
         return (
           <div
             key={section.id}
-            className="rounded-2xl border border-border/50 bg-card shadow-sm overflow-hidden"
+            id={section.id}
+            className="rounded-2xl border border-border/50 bg-card shadow-sm overflow-hidden scroll-mt-20"
           >
             {/* Header */}
             <button
