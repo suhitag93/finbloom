@@ -27,12 +27,13 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const SidebarLayout = ({ children }: { children: React.ReactNode }) => (
   <SidebarProvider>
     <div className="min-h-screen flex w-full">
-      <AppSidebar />
-      <div className="flex-1 flex flex-col">
-        <header className="h-12 flex items-center border-b border-border/50 bg-background/80 backdrop-blur-md md:hidden">
-          <SidebarTrigger className="ml-3" />
-          <span className="ml-2 font-display text-sm font-semibold text-foreground">FinBloom</span>
-        </header>
+      {/* Desktop sidebar — hidden on mobile */}
+      <div className="hidden md:block">
+        <AppSidebar />
+      </div>
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Mobile header with hamburger + nav drawer */}
+        <MobileHeader />
         <main className="flex-1">{children}</main>
       </div>
     </div>
