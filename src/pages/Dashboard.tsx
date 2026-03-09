@@ -48,8 +48,9 @@ const Dashboard = () => {
           <SpendingOverview />
         </div>
 
-        <div id="coaching" className="mb-6 scroll-mt-6">
+        <div id="coaching" className="grid lg:grid-cols-2 gap-6 mb-6 scroll-mt-6">
           <WeeklyCoaching />
+          <WeeklyCheckIn />
         </div>
 
         <div id="goals" className="mb-6 scroll-mt-6">
