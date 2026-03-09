@@ -30,7 +30,7 @@ const MobileDashboardAccordion = ({ sections, openIds, onToggle }: Props) => {
           >
             {/* Header */}
             <button
-              onClick={() => toggle(section.id)}
+              onClick={() => onToggle(section.id)}
               className="flex items-center gap-3 w-full px-4 py-3.5 text-left transition-colors hover:bg-secondary/40"
             >
               <div className="flex items-center justify-center w-8 h-8 rounded-xl bg-primary/10">
