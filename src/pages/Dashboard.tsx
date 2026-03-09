@@ -1,4 +1,4 @@
-import { useEffect, lazy, Suspense } from "react";
+import { useEffect, useState, useCallback, lazy, Suspense } from "react";
 import { useLocation } from "react-router-dom";
 import { Heart, Zap, Sprout, BookOpen } from "lucide-react";
 import UserLevelHeader from "@/components/dashboard/UserLevelHeader";
