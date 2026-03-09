@@ -7,6 +7,7 @@ import GoalTracker from "@/components/dashboard/GoalTracker";
 import GamifiedMissions from "@/components/dashboard/GamifiedMissions";
 import SmartAlerts from "@/components/dashboard/SmartAlerts";
 import WeeklyCoaching from "@/components/dashboard/WeeklyCoaching";
+import WeeklyCheckIn from "@/components/dashboard/WeeklyCheckIn";
 import MonthlyReport from "@/components/dashboard/MonthlyReport";
 import RecommendationCard from "@/components/dashboard/RecommendationCard";
 import NetWorthCard from "@/components/dashboard/NetWorthCard";
@@ -47,8 +48,9 @@ const Dashboard = () => {
           <SpendingOverview />
         </div>
 
-        <div id="coaching" className="mb-6 scroll-mt-6">
+        <div id="coaching" className="grid lg:grid-cols-2 gap-6 mb-6 scroll-mt-6">
           <WeeklyCoaching />
+          <WeeklyCheckIn />
         </div>
 
         <div id="goals" className="mb-6 scroll-mt-6">
