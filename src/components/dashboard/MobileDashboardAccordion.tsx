@@ -12,17 +12,11 @@ interface AccordionSection {
 
 interface Props {
   sections: AccordionSection[];
+  openIds: string[];
+  onToggle: (id: string) => void;
 }
 
-const MobileDashboardAccordion = ({ sections }: Props) => {
-  // First section open by default
-  const [openIds, setOpenIds] = useState<string[]>([sections[0]?.id ?? ""]);
-
-  const toggle = (id: string) => {
-    setOpenIds((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
-    );
-  };
+const MobileDashboardAccordion = ({ sections, openIds, onToggle }: Props) => {
 
   return (
     <div className="flex flex-col gap-3 md:hidden">
