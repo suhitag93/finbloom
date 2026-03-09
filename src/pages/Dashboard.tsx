@@ -23,14 +23,25 @@ const SpendingOverview = lazy(() => import("@/components/dashboard/SpendingOverv
 const Dashboard = () => {
   const { profile, loading, firstName } = useProfile();
   const location = useLocation();
+  const [openAccordionIds, setOpenAccordionIds] = useState<string[]>(["overview"]);
 
-  // Scroll to section when hash changes
+  const toggleAccordion = useCallback((id: string) => {
+    setOpenAccordionIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  }, []);
+
+  // When hash changes, open that accordion section and scroll to it
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.replace("#", "");
+      const sectionIds = ["overview", "spending", "growth", "guide"];
+      if (sectionIds.includes(id)) {
+        setOpenAccordionIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
+      }
       setTimeout(() => {
         document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 100);
+      }, 150);
     }
   }, [location.hash]);
 
