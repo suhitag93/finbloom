@@ -149,6 +149,18 @@ const ConnectedAccountsTab = () => {
                     <span className="text-lg">{accts[0]?.institution?.logo_url || "🏦"}</span>
                     <CardTitle className="text-base">{instName}</CardTitle>
                     <Badge variant="outline" className="text-xs bg-primary/10 text-primary border-primary/20">Connected</Badge>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-destructive/70 hover:text-destructive hover:bg-destructive/10 ml-1 h-7 px-2 text-xs"
+                      onClick={() => setDisconnectTarget({
+                        instName,
+                        instId: accts[0]?.institution_id || "",
+                        accountIds: accts.map(a => a.id),
+                      })}
+                    >
+                      <Unlink className="w-3 h-3 mr-1" /> Disconnect
+                    </Button>
                   </div>
                   <span className="text-xs text-muted-foreground">
                     Last synced: {accts[0]?.last_synced_at ? new Date(accts[0].last_synced_at).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "Never"}
