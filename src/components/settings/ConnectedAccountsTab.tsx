@@ -3,13 +3,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, RefreshCw, Trash2, Building2, TrendingUp, CreditCard, Landmark, PiggyBank, Wallet, Loader2 } from "lucide-react";
+import { Plus, RefreshCw, Trash2, Building2, TrendingUp, CreditCard, Landmark, PiggyBank, Wallet, Loader2, Unlink } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAccounts } from "@/hooks/useAccounts";
 import { usePlaid } from "@/hooks/usePlaid";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const ACCOUNT_TYPE_ICONS: Record<string, React.ReactNode> = {
@@ -24,7 +27,9 @@ const ACCOUNT_TYPE_ICONS: Record<string, React.ReactNode> = {
 const ConnectedAccountsTab = () => {
   const { accounts, institutions, loading, refetch, addManualAccount, deleteAccount, refreshAccount } = useAccounts();
   const { startPlaidLink, openWhenReady, loading: plaidLoading, syncing, ready: plaidReady, linkToken } = usePlaid(() => refetch());
+  const { user } = useAuth();
   const [showManual, setShowManual] = useState(false);
+  const [disconnectTarget, setDisconnectTarget] = useState<{ instName: string; instId: string; accountIds: string[] } | null>(null);
   const [manualForm, setManualForm] = useState({ nickname: "", account_type: "checking", balance: "" });
 
   // Auto-open Plaid Link when token becomes ready
@@ -58,6 +63,29 @@ const ConnectedAccountsTab = () => {
   const handleRefresh = async (accountId: string) => {
     await refreshAccount(accountId);
     toast.success("Account synced!");
+  };
+
+  const handleDisconnectInstitution = async () => {
+    if (!disconnectTarget || !user) return;
+    const { instName, instId, accountIds } = disconnectTarget;
+
+    // Delete all accounts for this institution
+    for (const id of accountIds) {
+      await supabase.from("accounts").delete().eq("id", id);
+    }
+
+    // Delete plaid_connections for this institution's accounts
+    await supabase.from("plaid_connections").delete().eq("user_id", user.id);
+
+    // Check if any accounts remain
+    const { data: remaining } = await supabase.from("accounts").select("id").eq("user_id", user.id).limit(1);
+    if (!remaining || remaining.length === 0) {
+      await supabase.from("profiles").update({ connected_bank: false }).eq("user_id", user.id);
+    }
+
+    setDisconnectTarget(null);
+    toast.success(`${instName} disconnected successfully`);
+    await refetch();
   };
 
   if (loading) return <div className="text-muted-foreground text-sm py-8 text-center">Loading accounts…</div>;
@@ -121,6 +149,18 @@ const ConnectedAccountsTab = () => {
                     <span className="text-lg">{accts[0]?.institution?.logo_url || "🏦"}</span>
                     <CardTitle className="text-base">{instName}</CardTitle>
                     <Badge variant="outline" className="text-xs bg-primary/10 text-primary border-primary/20">Connected</Badge>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-destructive/70 hover:text-destructive hover:bg-destructive/10 ml-1 h-7 px-2 text-xs"
+                      onClick={() => setDisconnectTarget({
+                        instName,
+                        instId: accts[0]?.institution_id || "",
+                        accountIds: accts.map(a => a.id),
+                      })}
+                    >
+                      <Unlink className="w-3 h-3 mr-1" /> Disconnect
+                    </Button>
                   </div>
                   <span className="text-xs text-muted-foreground">
                     Last synced: {accts[0]?.last_synced_at ? new Date(accts[0].last_synced_at).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "Never"}
@@ -191,6 +231,23 @@ const ConnectedAccountsTab = () => {
           </div>
         </DialogContent>
       </Dialog>
+      {/* Disconnect Confirmation Dialog */}
+      <AlertDialog open={!!disconnectTarget} onOpenChange={(open) => !open && setDisconnectTarget(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Disconnect {disconnectTarget?.instName}?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will remove all {disconnectTarget?.accountIds.length} connected account{(disconnectTarget?.accountIds.length || 0) !== 1 ? "s" : ""} and stop syncing.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDisconnectInstitution} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Disconnect
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
