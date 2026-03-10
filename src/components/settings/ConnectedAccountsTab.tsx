@@ -65,6 +65,29 @@ const ConnectedAccountsTab = () => {
     toast.success("Account synced!");
   };
 
+  const handleDisconnectInstitution = async () => {
+    if (!disconnectTarget || !user) return;
+    const { instName, instId, accountIds } = disconnectTarget;
+
+    // Delete all accounts for this institution
+    for (const id of accountIds) {
+      await supabase.from("accounts").delete().eq("id", id);
+    }
+
+    // Delete plaid_connections for this institution's accounts
+    await supabase.from("plaid_connections").delete().eq("user_id", user.id);
+
+    // Check if any accounts remain
+    const { data: remaining } = await supabase.from("accounts").select("id").eq("user_id", user.id).limit(1);
+    if (!remaining || remaining.length === 0) {
+      await supabase.from("profiles").update({ connected_bank: false }).eq("user_id", user.id);
+    }
+
+    setDisconnectTarget(null);
+    toast.success(`${instName} disconnected successfully`);
+    await refetch();
+  };
+
   if (loading) return <div className="text-muted-foreground text-sm py-8 text-center">Loading accounts…</div>;
 
   return (
