@@ -156,6 +156,100 @@ export type Database = {
         }
         Relationships: []
       }
+      investment_holdings: {
+        Row: {
+          account_id: string
+          cost_basis: number | null
+          created_at: string
+          current_value: number
+          id: string
+          name: string | null
+          plaid_security_id: string | null
+          quantity: number
+          symbol: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_id: string
+          cost_basis?: number | null
+          created_at?: string
+          current_value?: number
+          id?: string
+          name?: string | null
+          plaid_security_id?: string | null
+          quantity?: number
+          symbol?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_id?: string
+          cost_basis?: number | null
+          created_at?: string
+          current_value?: number
+          id?: string
+          name?: string | null
+          plaid_security_id?: string | null
+          quantity?: number
+          symbol?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "investment_holdings_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      liabilities: {
+        Row: {
+          account_id: string
+          apr: number | null
+          balance: number
+          created_at: string
+          id: string
+          liability_type: string
+          minimum_payment: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_id: string
+          apr?: number | null
+          balance?: number
+          created_at?: string
+          id?: string
+          liability_type?: string
+          minimum_payment?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_id?: string
+          apr?: number | null
+          balance?: number
+          created_at?: string
+          id?: string
+          liability_type?: string
+          minimum_payment?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "liabilities_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       missions: {
         Row: {
           created_at: string
@@ -281,6 +375,56 @@ export type Database = {
           xp_points?: number
         }
         Relationships: []
+      }
+      transactions: {
+        Row: {
+          account_id: string
+          amount: number
+          category: string | null
+          created_at: string
+          date: string
+          id: string
+          merchant_name: string | null
+          pending: boolean
+          plaid_transaction_id: string | null
+          subcategory: string | null
+          user_id: string
+        }
+        Insert: {
+          account_id: string
+          amount?: number
+          category?: string | null
+          created_at?: string
+          date?: string
+          id?: string
+          merchant_name?: string | null
+          pending?: boolean
+          plaid_transaction_id?: string | null
+          subcategory?: string | null
+          user_id: string
+        }
+        Update: {
+          account_id?: string
+          amount?: number
+          category?: string | null
+          created_at?: string
+          date?: string
+          id?: string
+          merchant_name?: string | null
+          pending?: boolean
+          plaid_transaction_id?: string | null
+          subcategory?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_achievements: {
         Row: {
