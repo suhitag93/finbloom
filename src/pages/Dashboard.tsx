@@ -14,7 +14,7 @@ import NetWorthCard from "@/components/dashboard/NetWorthCard";
 import AchievementsBadges from "@/components/dashboard/AchievementsBadges";
 import LevelProgressionMap from "@/components/dashboard/LevelProgressionMap";
 import SavingsBuckets from "@/components/dashboard/SavingsBuckets";
-import FinancialGarden from "@/components/dashboard/FinancialGarden";
+import GardenLoadingScreen from "@/components/dashboard/GardenLoadingScreen";
 import { MobileDashboardAccordion } from "@/components/dashboard/MobileDashboardAccordion";
 import type { AccordionSection } from "@/components/dashboard/MobileDashboardAccordion";
 import { useProfile } from "@/hooks/useProfile";
@@ -25,6 +25,7 @@ const Dashboard = () => {
   const { profile, loading, firstName } = useProfile();
   const location = useLocation();
   const [openAccordionIds, setOpenAccordionIds] = useState<string[]>(["overview"]);
+  const [gardenComplete, setGardenComplete] = useState(false);
 
   const toggleAccordion = useCallback((id: string) => {
     setOpenAccordionIds((prev) =>
@@ -46,12 +47,9 @@ const Dashboard = () => {
     }
   }, [location.hash, location.key]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-muted-foreground">Loading your dashboard…</p>
-      </div>
-    );
+  // Show garden loading screen while data loads
+  if (loading || !gardenComplete) {
+    return <GardenLoadingScreen onComplete={() => setGardenComplete(true)} />;
   }
 
   const mobileAccordionSections: AccordionSection[] = [
@@ -118,10 +116,6 @@ const Dashboard = () => {
         {/* Welcome header */}
         <UserLevelHeader firstName={firstName} />
 
-        {/* Financial Garden — prominent on both mobile & desktop */}
-        <div className="mb-4 md:mb-6">
-          <FinancialGarden />
-        </div>
 
         {/* ===== MOBILE: Accordion layout ===== */}
         <MobileDashboardAccordion sections={mobileAccordionSections} openIds={openAccordionIds} onToggle={toggleAccordion} />
