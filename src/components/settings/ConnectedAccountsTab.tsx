@@ -231,6 +231,23 @@ const ConnectedAccountsTab = () => {
           </div>
         </DialogContent>
       </Dialog>
+      {/* Disconnect Confirmation Dialog */}
+      <AlertDialog open={!!disconnectTarget} onOpenChange={(open) => !open && setDisconnectTarget(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Disconnect {disconnectTarget?.instName}?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will remove all {disconnectTarget?.accountIds.length} connected account{(disconnectTarget?.accountIds.length || 0) !== 1 ? "s" : ""} and stop syncing.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDisconnectInstitution} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Disconnect
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
