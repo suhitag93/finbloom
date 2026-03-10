@@ -129,6 +129,100 @@ export type Database = {
           },
         ]
       }
+      goal_milestones: {
+        Row: {
+          goal_id: string
+          id: string
+          milestone_pct: number
+          reached_at: string | null
+          user_id: string
+          xp_awarded: number | null
+        }
+        Insert: {
+          goal_id: string
+          id?: string
+          milestone_pct: number
+          reached_at?: string | null
+          user_id: string
+          xp_awarded?: number | null
+        }
+        Update: {
+          goal_id?: string
+          id?: string
+          milestone_pct?: number
+          reached_at?: string | null
+          user_id?: string
+          xp_awarded?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "goal_milestones_goal_id_fkey"
+            columns: ["goal_id"]
+            isOneToOne: false
+            referencedRelation: "goals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      goals: {
+        Row: {
+          coach_notes: string | null
+          created_at: string | null
+          current_amount: number | null
+          description: string | null
+          goal_type: string
+          id: string
+          linked_account_id: string | null
+          monthly_contribution: number | null
+          status: string | null
+          target_amount: number
+          target_date: string | null
+          title: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          coach_notes?: string | null
+          created_at?: string | null
+          current_amount?: number | null
+          description?: string | null
+          goal_type: string
+          id?: string
+          linked_account_id?: string | null
+          monthly_contribution?: number | null
+          status?: string | null
+          target_amount: number
+          target_date?: string | null
+          title: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          coach_notes?: string | null
+          created_at?: string | null
+          current_amount?: number | null
+          description?: string | null
+          goal_type?: string
+          id?: string
+          linked_account_id?: string | null
+          monthly_contribution?: number | null
+          status?: string | null
+          target_amount?: number
+          target_date?: string | null
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "goals_linked_account_id_fkey"
+            columns: ["linked_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       institutions: {
         Row: {
           created_at: string
