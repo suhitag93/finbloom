@@ -9,6 +9,7 @@ import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import FinBloomIcon from "@/components/FinBloomIcon";
+import { DEMO_PROFILES, loginDemoProfile } from "@/lib/demo-profiles";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [demoLoading, setDemoLoading] = useState<string | null>(null);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
