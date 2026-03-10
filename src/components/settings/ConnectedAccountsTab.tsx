@@ -27,7 +27,9 @@ const ACCOUNT_TYPE_ICONS: Record<string, React.ReactNode> = {
 const ConnectedAccountsTab = () => {
   const { accounts, institutions, loading, refetch, addManualAccount, deleteAccount, refreshAccount } = useAccounts();
   const { startPlaidLink, openWhenReady, loading: plaidLoading, syncing, ready: plaidReady, linkToken } = usePlaid(() => refetch());
+  const { user } = useAuth();
   const [showManual, setShowManual] = useState(false);
+  const [disconnectTarget, setDisconnectTarget] = useState<{ instName: string; instId: string; accountIds: string[] } | null>(null);
   const [manualForm, setManualForm] = useState({ nickname: "", account_type: "checking", balance: "" });
 
   // Auto-open Plaid Link when token becomes ready
