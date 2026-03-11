@@ -1,11 +1,13 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { User, Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import { DEMO_EMAIL } from "@/lib/demo-constants";
 
 interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
+  isDemoUser: boolean;
   signOut: () => Promise<void>;
 }
 
@@ -13,6 +15,7 @@ const AuthContext = createContext<AuthContextType>({
   user: null,
   session: null,
   loading: true,
+  isDemoUser: false,
   signOut: async () => {},
 });
 
@@ -37,12 +40,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => subscription.unsubscribe();
   }, []);
 
+  const isDemoUser = user?.email === DEMO_EMAIL;
+
   const signOut = async () => {
     await supabase.auth.signOut();
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, signOut }}>
+    <AuthContext.Provider value={{ user, session, loading, isDemoUser, signOut }}>
       {children}
     </AuthContext.Provider>
   );

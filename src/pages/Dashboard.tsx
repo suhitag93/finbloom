@@ -165,6 +165,8 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
+    <DemoTimedPrompt />
+    </>
   );
 };
 

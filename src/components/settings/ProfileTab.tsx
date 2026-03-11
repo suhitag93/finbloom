@@ -10,12 +10,16 @@ import { toast } from "sonner";
 
 const ProfileTab = () => {
   const { profile } = useProfile();
-  const { user } = useAuth();
+  const { user, isDemoUser } = useAuth();
   const [fullName, setFullName] = useState(profile?.full_name || "");
   const [saving, setSaving] = useState(false);
 
   const handleSave = async () => {
     if (!user) return;
+    if (isDemoUser) {
+      toast.error("This is demo data — sign up to customize your profile 💚");
+      return;
+    }
     setSaving(true);
     await supabase.from("profiles").update({ full_name: fullName }).eq("user_id", user.id);
     toast.success("Profile updated!");
