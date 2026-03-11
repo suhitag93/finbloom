@@ -6,7 +6,6 @@ import GoalsDashboard from "@/components/settings/GoalsDashboard";
 import { useGoals } from "@/hooks/useGoals";
 
 const GoalsBucketsTab = () => {
-  const [showCoach, setShowCoach] = useState(false);
   const { goals, loading } = useGoals();
 
   if (loading) return <div className="text-muted-foreground text-sm py-8 text-center">Loading…</div>;
@@ -16,18 +15,9 @@ const GoalsBucketsTab = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="font-display text-lg font-semibold text-foreground">Goals</h2>
-          <p className="text-muted-foreground text-sm">AI-coached goals tailored to your finances</p>
+          <p className="text-muted-foreground text-sm">Goals tailored to your profile — coming from onboarding</p>
         </div>
-        {!showCoach && (
-          <Button size="sm" onClick={() => setShowCoach(true)} className="gap-1.5">
-            <Plus className="w-3.5 h-3.5" /> New Goal
-          </Button>
-        )}
       </div>
-
-      {showCoach && (
-        <GoalCoach onComplete={() => setShowCoach(false)} />
-      )}
 
       <GoalsDashboard />
 
