@@ -13,11 +13,11 @@ const categoryLabels: Record<string, string> = {
 };
 
 const AchievementsBadges = () => {
-  const { badges, earnedBadges } = useXP();
+  const { earnedBadges } = useXP();
   const [filter, setFilter] = useState<string>("all");
 
   const categories = ["all", ...Object.keys(categoryLabels)];
-  const filtered = filter === "all" ? badges : badges.filter((b) => b.category === filter);
+  const filtered = filter === "all" ? earnedBadges : earnedBadges.filter((b) => b.category === filter);
 
   return (
     <motion.div
@@ -30,7 +30,7 @@ const AchievementsBadges = () => {
         <h3 className="font-display text-lg font-semibold text-foreground">Achievements</h3>
         <div className="flex items-center gap-1 text-xs font-medium text-accent">
           <Sparkles className="w-3.5 h-3.5" />
-          {earnedBadges.length}/{badges.length} earned
+          {earnedBadges.length} earned
         </div>
       </div>
 
