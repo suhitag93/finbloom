@@ -30,7 +30,7 @@ const AchievementsBadges = () => {
         <h3 className="font-display text-lg font-semibold text-foreground">Achievements</h3>
         <div className="flex items-center gap-1 text-xs font-medium text-accent">
           <Sparkles className="w-3.5 h-3.5" />
-          {earnedBadges.length}/{badges.length} earned
+          {earnedBadges.length} earned
         </div>
       </div>
 
