@@ -9,8 +9,8 @@
       <stop offset="100%" style="stop-color:#8B72C8"/>
     </linearGradient>
     <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#E8F0E9"/>
-      <stop offset="100%" style="stop-color:#D4E4D6"/>
+      <stop offset="0%" style="stop-color:#F5F7F4"/>
+      <stop offset="100%" style="stop-color:#D8F3DC"/>
     </linearGradient>
     <filter id="softDrop" x="-15%" y="-15%" width="130%" height="130%">
       <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#3A5A3E" flood-opacity="0.18"/>
