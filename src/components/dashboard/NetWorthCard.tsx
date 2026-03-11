@@ -84,6 +84,8 @@ const NetWorthCard = () => {
           </div>
         ))}
       </div>
+
+      <DemoNetWorthPrompt />
     </motion.div>
   );
 };
