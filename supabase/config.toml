@@ -3,8 +3,6 @@ project_id = "wxpifygevyofkkankgtu"
 [functions.plaid-exchange]
 verify_jwt = false
 
-[functions.goal-coach]
-verify_jwt = false
 
 [functions.demo-login]
 verify_jwt = false
