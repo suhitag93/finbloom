@@ -13,11 +13,11 @@ const categoryLabels: Record<string, string> = {
 };
 
 const AchievementsBadges = () => {
-  const { badges, earnedBadges } = useXP();
+  const { earnedBadges } = useXP();
   const [filter, setFilter] = useState<string>("all");
 
   const categories = ["all", ...Object.keys(categoryLabels)];
-  const filtered = filter === "all" ? badges : badges.filter((b) => b.category === filter);
+  const filtered = filter === "all" ? earnedBadges : earnedBadges.filter((b) => b.category === filter);
 
   return (
     <motion.div
