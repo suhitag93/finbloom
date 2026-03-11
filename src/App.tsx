@@ -44,7 +44,7 @@ const SidebarLayout = ({ children }: { children: React.ReactNode }) => (
 const AppLayout = () => {
   const location = useLocation();
   const showSidebar = ["/dashboard", "/settings"].includes(location.pathname);
-  const hideNav = showSidebar || ["/onboarding", "/auth"].includes(location.pathname);
+  const hideNav = showSidebar || ["/onboarding", "/auth", "/survey"].includes(location.pathname);
 
   return (
     <>
