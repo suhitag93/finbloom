@@ -31,7 +31,7 @@ const HeroSection = () => {
             className="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-foreground leading-[1.12] mb-6"
           >
             Your money.{" "}
-            <span className="text-gradient-bloom italic">Finally on your side.</span>
+            <span className="text-accent italic">Finally on your side.</span>
           </motion.h1>
 
           <motion.p

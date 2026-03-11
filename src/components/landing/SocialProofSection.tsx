@@ -4,14 +4,17 @@ const quotes = [
   {
     text: "Finally an app that doesn't make me feel bad about my spending.",
     author: "Early tester",
+    bg: "bg-lavender-light",
   },
   {
     text: "I checked my account balance for the first time in months. And it felt okay.",
     author: "Early tester",
+    bg: "bg-secondary",
   },
   {
     text: "The streak feature actually works. I've checked in 12 days in a row.",
     author: "Early tester",
+    bg: "bg-lavender-light",
   },
 ];
 
@@ -31,7 +34,7 @@ const SocialProofSection = () => (
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="font-display text-3xl md:text-4xl font-semibold text-foreground text-center mb-12"
+        className="font-display text-3xl md:text-4xl font-semibold text-primary text-center mb-12"
       >
         Women are already blooming 🌱
       </motion.h2>
@@ -45,7 +48,7 @@ const SocialProofSection = () => (
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="rounded-2xl border border-border bg-card p-8 shadow-card"
+            className={`rounded-2xl border border-border/50 ${q.bg} p-8 shadow-card`}
           >
             <p className="text-foreground text-base leading-relaxed italic mb-4">
               "{q.text}"
