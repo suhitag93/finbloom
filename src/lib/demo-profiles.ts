@@ -106,18 +106,18 @@ async function seedBloomProfile(userId: string) {
 
   const { data: existingXP } = await supabase.from("xp_ledger").select("id").eq("user_id", userId).limit(1);
   if (!existingXP || existingXP.length === 0) {
-    await supabase.from("xp_ledger").insert([
-      { user_id: userId, xp_amount: 100, reason: "Completed onboarding", source_type: "onboarding" },
-      { user_id: userId, xp_amount: 200, reason: "Connected bank accounts", source_type: "banking" },
-      { user_id: userId, xp_amount: 50, reason: "Set financial goals", source_type: "onboarding" },
-      { user_id: userId, xp_amount: 150, reason: "First $1,000 saved", source_type: "achievement" },
-      { user_id: userId, xp_amount: 100, reason: "Emergency fund started", source_type: "saving" },
-      { user_id: userId, xp_amount: 200, reason: "Opened investment account", source_type: "investing" },
-      { user_id: userId, xp_amount: 75, reason: "Completed weekly missions", source_type: "mission" },
-      { user_id: userId, xp_amount: 100, reason: "7-day login streak", source_type: "engagement" },
-      { user_id: userId, xp_amount: 150, reason: "Paid off credit card", source_type: "achievement" },
-      { user_id: userId, xp_amount: 200, reason: "3-month emergency fund", source_type: "achievement" },
-      { user_id: userId, xp_amount: 175, reason: "Consistent saver badge", source_type: "achievement" },
+    await awardXP(userId, [
+      { xp: 100, source: "onboarding", reason: "Completed onboarding" },
+      { xp: 200, source: "banking", reason: "Connected bank accounts" },
+      { xp: 50, source: "onboarding", reason: "Set financial goals" },
+      { xp: 150, source: "achievement", reason: "First $1,000 saved" },
+      { xp: 100, source: "saving", reason: "Emergency fund started" },
+      { xp: 200, source: "investing", reason: "Opened investment account" },
+      { xp: 75, source: "mission", reason: "Completed weekly missions" },
+      { xp: 100, source: "engagement", reason: "7-day login streak" },
+      { xp: 150, source: "achievement", reason: "Paid off credit card" },
+      { xp: 200, source: "achievement", reason: "3-month emergency fund" },
+      { xp: 175, source: "achievement", reason: "Consistent saver badge" },
     ]);
 
     // Some achievements
