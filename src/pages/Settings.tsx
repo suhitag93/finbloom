@@ -5,9 +5,12 @@ import ProfileTab from "@/components/settings/ProfileTab";
 import ConnectedAccountsTab from "@/components/settings/ConnectedAccountsTab";
 import GoalsBucketsTab from "@/components/settings/GoalsBucketsTab";
 import SecurityTab from "@/components/settings/SecurityTab";
+import DemoBanner from "@/components/DemoBanner";
 
 const Settings = () => {
   return (
+    <>
+    <DemoBanner />
     <div className="min-h-screen pt-20 pb-12 px-4">
       <div className="container mx-auto max-w-4xl">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
