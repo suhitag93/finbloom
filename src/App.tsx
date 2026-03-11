@@ -13,6 +13,7 @@ import Auth from "./pages/Auth";
 import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
+import Survey from "./pages/Survey";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -43,13 +44,14 @@ const SidebarLayout = ({ children }: { children: React.ReactNode }) => (
 const AppLayout = () => {
   const location = useLocation();
   const showSidebar = ["/dashboard", "/settings"].includes(location.pathname);
-  const hideNav = showSidebar || ["/onboarding", "/auth"].includes(location.pathname);
+  const hideNav = showSidebar || ["/onboarding", "/auth", "/survey"].includes(location.pathname);
 
   return (
     <>
       {!hideNav && <Navbar />}
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/survey" element={<Survey />} />
         <Route path="/auth" element={<Auth />} />
         <Route
           path="/onboarding"

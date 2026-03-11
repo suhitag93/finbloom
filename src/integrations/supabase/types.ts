@@ -470,6 +470,60 @@ export type Database = {
         }
         Relationships: []
       }
+      survey_responses: {
+        Row: {
+          age_group: string | null
+          anything_else: string | null
+          app_dropout_reasons: string[] | null
+          biggest_barrier: string | null
+          confident_self: string | null
+          created_at: string | null
+          dream_goal: string | null
+          email: string | null
+          engagement_drivers: string | null
+          financial_journey: string | null
+          id: string
+          money_feelings: string[] | null
+          money_is: string | null
+          money_upbringing: string | null
+          motivation_ranking: string[] | null
+        }
+        Insert: {
+          age_group?: string | null
+          anything_else?: string | null
+          app_dropout_reasons?: string[] | null
+          biggest_barrier?: string | null
+          confident_self?: string | null
+          created_at?: string | null
+          dream_goal?: string | null
+          email?: string | null
+          engagement_drivers?: string | null
+          financial_journey?: string | null
+          id?: string
+          money_feelings?: string[] | null
+          money_is?: string | null
+          money_upbringing?: string | null
+          motivation_ranking?: string[] | null
+        }
+        Update: {
+          age_group?: string | null
+          anything_else?: string | null
+          app_dropout_reasons?: string[] | null
+          biggest_barrier?: string | null
+          confident_self?: string | null
+          created_at?: string | null
+          dream_goal?: string | null
+          email?: string | null
+          engagement_drivers?: string | null
+          financial_journey?: string | null
+          id?: string
+          money_feelings?: string[] | null
+          money_is?: string | null
+          money_upbringing?: string | null
+          motivation_ranking?: string[] | null
+        }
+        Relationships: []
+      }
       transactions: {
         Row: {
           account_id: string

@@ -24,6 +24,9 @@ const Navbar = () => {
               <a href="#how-it-works" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Features</a>
               <a href="#growth-journey" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Growth Stages</a>
               <a href="#about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">About</a>
+              {!user && (
+                <Link to="/survey" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Survey</Link>
+              )}
             </>
           ) : (
             <>
