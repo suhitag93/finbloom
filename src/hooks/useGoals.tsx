@@ -61,9 +61,10 @@ export const useGoals = () => {
     const { error } = await supabase.from("goals").insert({ ...goal, user_id: user.id });
     if (error) { toast.error("Failed to create goal"); return; }
     toast.success("Goal created! 🌱 +100 XP");
-    // Award XP for goal creation
-    await supabase.from("xp_ledger").insert({
-      user_id: user.id, xp_amount: 100, source_type: "goal_created", reason: `Created goal: ${goal.title}`,
+    // Award XP via secure server-side function
+    await supabase.rpc("award_xp", {
+      p_user_id: user.id, p_xp_amount: 100, p_source_type: "goal_created",
+      p_reason: `Created goal: ${goal.title}`,
     });
     await fetchGoals();
   };
