@@ -86,9 +86,9 @@ export const useGoals = () => {
         await supabase.from("goal_milestones").insert({
           goal_id: goalId, user_id: user.id, milestone_pct: threshold, xp_awarded: xp,
         });
-        await supabase.from("xp_ledger").insert({
-          user_id: user.id, xp_amount: xp, source_type: "goal_milestone",
-          source_id: goalId, reason: `Reached ${threshold}% on ${goal.title}`,
+        await supabase.rpc("award_xp", {
+          p_user_id: user.id, p_xp_amount: xp, p_source_type: "goal_milestone",
+          p_source_id: goalId, p_reason: `Reached ${threshold}% on ${goal.title}`,
         });
         const emoji = threshold === 100 ? "🎉" : threshold === 75 ? "🌸" : threshold === 50 ? "🌿" : "🌱";
         toast.success(`${emoji} ${threshold}% milestone! +${xp} XP`);
