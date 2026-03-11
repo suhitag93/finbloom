@@ -5,16 +5,19 @@ const cards = [
     emoji: "🌱",
     title: "Meets you where you are",
     body: "No judgment. No jargon. Just a warm, encouraging space to tend to your money at your own pace.",
+    bg: "bg-secondary",
   },
   {
     emoji: "⚡",
     title: "Small actions, real progress",
     body: "Daily micro-missions that take 60 seconds and actually move the needle on your goals.",
+    bg: "bg-lavender-light",
   },
   {
     emoji: "💚",
     title: "Celebrates your wins",
     body: "Every milestone matters. From your first savings deposit to hitting your emergency fund goal — finBloom sees your progress.",
+    bg: "bg-secondary",
   },
 ];
 
@@ -34,7 +37,7 @@ const FeelsLikeSection = () => (
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="font-display text-3xl md:text-4xl font-semibold text-foreground text-center mb-12"
+        className="font-display text-3xl md:text-4xl font-semibold text-accent text-center mb-12"
       >
         What finBloom feels like
       </motion.h2>
@@ -48,7 +51,7 @@ const FeelsLikeSection = () => (
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="rounded-2xl border border-border bg-card p-8 text-center shadow-card"
+            className={`rounded-2xl border border-border/50 ${c.bg} p-8 text-center shadow-card`}
           >
             <span className="text-4xl mb-4 block">{c.emoji}</span>
             <h3 className="font-display text-lg font-semibold text-foreground mb-3">

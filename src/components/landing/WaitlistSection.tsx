@@ -40,7 +40,7 @@ const WaitlistSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="font-display text-3xl md:text-4xl font-semibold text-foreground mb-4">
+          <h2 className="font-display text-3xl md:text-4xl font-semibold text-accent mb-4">
             Be part of building this 💚
           </h2>
           <p className="text-muted-foreground mb-8 leading-relaxed">
@@ -59,7 +59,7 @@ const WaitlistSection = () => {
                 <p className="font-display text-lg font-semibold text-foreground">You're on the list! 💚</p>
                 <Link
                   to="/survey"
-                  className="text-sm text-primary hover:underline inline-flex items-center gap-1 mt-2"
+                  className="text-sm text-accent hover:underline inline-flex items-center gap-1 mt-2"
                 >
                   Want to help shape what gets built? Take the 5-minute survey <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
@@ -84,7 +84,7 @@ const WaitlistSection = () => {
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2 whitespace-nowrap"
+                  className="rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2 whitespace-nowrap"
                 >
                   {status === "loading" ? (
                     <Loader2 className="w-4 h-4 animate-spin" />

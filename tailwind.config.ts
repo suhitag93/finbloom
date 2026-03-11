@@ -64,6 +64,7 @@ export default {
           light: "hsl(var(--lavender-light))",
           DEFAULT: "hsl(var(--accent))",
         },
+        "sage-mid": "hsl(var(--sage-mid))",
         cream: {
           dark: "hsl(var(--cream-dark))",
         },
