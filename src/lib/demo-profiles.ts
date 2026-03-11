@@ -36,6 +36,15 @@ export const DEMO_PROFILES: DemoProfile[] = [
   },
 ];
 
+// Helper to award XP via secure server-side function
+async function awardXP(userId: string, entries: { xp: number; source: string; reason: string }[]) {
+  for (const e of entries) {
+    await supabase.rpc("award_xp", {
+      p_user_id: userId, p_xp_amount: e.xp, p_source_type: e.source, p_reason: e.reason,
+    });
+  }
+}
+
 // ─── Seed helpers per level ──────────────────────────────────────────────────
 
 async function seedSeedProfile(userId: string) {
@@ -56,10 +65,10 @@ async function seedSeedProfile(userId: string) {
 
   const { data: existingXP } = await supabase.from("xp_ledger").select("id").eq("user_id", userId).limit(1);
   if (!existingXP || existingXP.length === 0) {
-    await supabase.from("xp_ledger").insert([
-      { user_id: userId, xp_amount: 100, reason: "Completed onboarding", source_type: "onboarding" },
-      { user_id: userId, xp_amount: 50, reason: "Set financial goals", source_type: "onboarding" },
-      { user_id: userId, xp_amount: 20, reason: "First login streak", source_type: "engagement" },
+    await awardXP(userId, [
+      { xp: 100, source: "onboarding", reason: "Completed onboarding" },
+      { xp: 50, source: "onboarding", reason: "Set financial goals" },
+      { xp: 20, source: "engagement", reason: "First login streak" },
     ]);
   }
 
