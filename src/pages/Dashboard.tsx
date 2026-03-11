@@ -113,6 +113,8 @@ const Dashboard = () => {
   ];
 
   return (
+    <>
+    <DemoBanner />
     <div className="min-h-screen pb-12 px-4 pt-4 md:pt-6">
       <div className="container mx-auto max-w-6xl">
         {/* Welcome header */}
