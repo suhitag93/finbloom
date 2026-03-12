@@ -3,9 +3,9 @@ import { TrendingUp, Wallet, CreditCard, BarChart3 } from "lucide-react";
 import FinancialDisclaimer from "@/components/FinancialDisclaimer";
 
 const categories = [
-  { label: "Savings", status: "⚠ Needs work", score: 40, color: "bg-success" },
-  { label: "Debt", status: "⚠ Medium", score: 55, color: "bg-accent" },
-  { label: "Spending", status: "✅ Healthy", score: 70, color: "bg-primary" },
+  { label: "Savings", status: "🌰 Room to grow", score: 40, color: "bg-success" },
+  { label: "Debt", status: "🪴 Being managed", score: 55, color: "bg-accent" },
+  { label: "Spending", status: "🌻 Healthy", score: 70, color: "bg-primary" },
   { label: "Investing", status: "🌱 Starting", score: 25, color: "bg-primary/40" },
 ];
 
