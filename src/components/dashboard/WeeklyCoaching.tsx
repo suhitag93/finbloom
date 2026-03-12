@@ -38,6 +38,7 @@ const WeeklyCoaching = () => {
           </motion.div>
         ))}
       </div>
+      <FinancialDisclaimer />
     </motion.div>
   );
 };

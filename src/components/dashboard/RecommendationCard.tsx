@@ -55,6 +55,7 @@ const RecommendationCard = () => {
           </motion.div>
         ))}
       </div>
+      <FinancialDisclaimer />
     </motion.div>
   );
 };

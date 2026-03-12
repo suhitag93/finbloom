@@ -39,6 +39,7 @@ const HealthScoreCard = () => {
           </p>
         </div>
       </div>
+      <FinancialDisclaimer />
     </motion.div>
   );
 };

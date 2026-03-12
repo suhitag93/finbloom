@@ -35,6 +35,7 @@ const MilestoneCard = () => {
         <span>$3,200 saved</span>
         <span>64%</span>
       </div>
+      <FinancialDisclaimer />
     </motion.div>
   );
 };

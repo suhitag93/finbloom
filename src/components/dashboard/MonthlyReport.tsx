@@ -46,6 +46,7 @@ const MonthlyReport = () => {
         <p className="font-display text-3xl font-bold text-primary">{savingsRate}%</p>
         <p className="text-xs text-muted-foreground mt-1">Above the 20% recommended target 🎉</p>
       </div>
+      <FinancialDisclaimer />
     </motion.div>
   );
 };

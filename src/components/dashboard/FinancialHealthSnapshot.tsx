@@ -85,6 +85,7 @@ const FinancialHealthSnapshot = () => {
           </div>
         ))}
       </div>
+      <FinancialDisclaimer />
     </motion.div>
   );
 };

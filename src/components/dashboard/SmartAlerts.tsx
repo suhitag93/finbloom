@@ -52,6 +52,7 @@ const SmartAlerts = () => {
           </motion.div>
         ))}
       </div>
+      <FinancialDisclaimer />
     </motion.div>
   );
 };
