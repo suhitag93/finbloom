@@ -1,13 +1,24 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { TrendingUp, Wallet, CreditCard, BarChart3 } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import FinancialDisclaimer from "@/components/FinancialDisclaimer";
+import { useFinancialHealthStates, type CategoryHealth } from "@/hooks/useFinancialHealthStates";
 
-const categories = [
-  { label: "Savings", status: "🌰 Room to grow", score: 40, color: "bg-success" },
-  { label: "Debt", status: "🪴 Being managed", score: 55, color: "bg-accent" },
-  { label: "Spending", status: "🌻 Healthy", score: 70, color: "bg-primary" },
-  { label: "Investing", status: "🌱 Starting", score: 25, color: "bg-primary/40" },
+const categoryMeta = [
+  { key: "savings" as const, label: "Savings", color: "bg-success" },
+  { key: "debt" as const, label: "Debt", color: "bg-accent" },
+  { key: "spending" as const, label: "Spending", color: "bg-primary" },
+  { key: "investing" as const, label: "Investing", color: "bg-primary/40" },
 ];
+
+const scoreBarMap: Record<string, number> = {
+  needs_work: 20,
+  room_to_grow: 40,
+  starting: 50,
+  being_managed: 70,
+  healthy: 95,
+};
 
 const summaryItems = [
   { label: "Net Worth", value: "$24,200", icon: TrendingUp, trend: "+$2,200" },
@@ -16,8 +27,41 @@ const summaryItems = [
   { label: "Investments", value: "$12,000", icon: BarChart3 },
 ];
 
+function StatusBadge({ health }: { health: CategoryHealth }) {
+  const [open, setOpen] = useState(false);
+  const isWarning = health.state === "needs_work";
+
+  return (
+    <TooltipProvider delayDuration={200}>
+      <Tooltip open={open} onOpenChange={setOpen}>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className={`text-xs w-32 text-right cursor-help transition-colors ${
+              isWarning ? "text-[#F59E0B] font-medium" : "text-muted-foreground"
+            }`}
+          >
+            {health.icon} {health.label}
+          </button>
+        </TooltipTrigger>
+        <TooltipContent
+          side="top"
+          className="max-w-[260px] text-xs leading-relaxed"
+        >
+          {health.tooltip}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+
 const FinancialHealthSnapshot = () => {
-  const score = 68;
+  const { savings, debt, spending, investing, overallScore } = useFinancialHealthStates();
+
+  const stateMap: Record<string, CategoryHealth> = { savings, debt, spending, investing };
+
+  const score = overallScore;
   const circumference = 2 * Math.PI * 44;
   const offset = circumference - (score / 100) * circumference;
 
@@ -56,20 +100,24 @@ const FinancialHealthSnapshot = () => {
 
         {/* Category breakdown */}
         <div className="flex-1 space-y-2.5">
-          {categories.map((cat) => (
-            <div key={cat.label} className="flex items-center gap-3">
-              <span className="text-sm text-foreground w-20">{cat.label}</span>
-              <div className="flex-1 h-2 rounded-full bg-secondary overflow-hidden">
-                <motion.div
-                  className={`h-full rounded-full ${cat.color}`}
-                  initial={{ width: 0 }}
-                  animate={{ width: `${cat.score}%` }}
-                  transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-                />
+          {categoryMeta.map((cat) => {
+            const health = stateMap[cat.key];
+            const barScore = scoreBarMap[health.state];
+            return (
+              <div key={cat.label} className="flex items-center gap-3">
+                <span className="text-sm text-foreground w-20">{cat.label}</span>
+                <div className="flex-1 h-2 rounded-full bg-secondary overflow-hidden">
+                  <motion.div
+                    className={`h-full rounded-full ${cat.color}`}
+                    initial={{ width: 0 }}
+                    animate={{ width: `${barScore}%` }}
+                    transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                  />
+                </div>
+                <StatusBadge health={health} />
               </div>
-              <span className="text-xs text-muted-foreground w-28 text-right">{cat.status}</span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
