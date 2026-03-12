@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, ArrowDownRight, PiggyBank } from "lucide-react";
+import FinancialDisclaimer from "@/components/FinancialDisclaimer";
 
 const MonthlyReport = () => {
   const income = 6200;

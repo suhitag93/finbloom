@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import FinancialDisclaimer from "@/components/FinancialDisclaimer";
 
 const HealthScoreCard = () => {
   const score = 72;

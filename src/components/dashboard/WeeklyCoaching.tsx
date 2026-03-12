@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Sparkles, Lightbulb } from "lucide-react";
+import FinancialDisclaimer from "@/components/FinancialDisclaimer";
 
 const insights = [
   "Redirecting $150/month from subscriptions could grow your investments by $85k in 20 years.",
