@@ -2,8 +2,10 @@ import { useState, useCallback } from "react";
 import { usePlaidLink, PlaidLinkOptions } from "react-plaid-link";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 export const usePlaid = (onSuccess?: () => void) => {
+  const { track } = useAnalytics();
   const [linkToken, setLinkToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [syncing, setSyncing] = useState(false);
@@ -54,21 +56,32 @@ export const usePlaid = (onSuccess?: () => void) => {
 
       if (fetchError) throw fetchError;
 
+      track("bank_connect_completed", {
+        institution_name: metadata?.institution?.name ?? "unknown",
+        accounts_connected: fetchResult?.accounts_synced ?? 0,
+      });
+
       toast.success(`Connected ${metadata?.institution?.name || "bank"}! ${fetchResult?.accounts_synced || 0} accounts synced 🌱 +150 XP`);
       onSuccess?.();
     } catch (err) {
       console.error("Plaid connection failed:", err);
+      track("bank_connect_failed", { error_type: String(err) });
       toast.error("Failed to connect bank account");
     } finally {
       setSyncing(false);
       setLinkToken(null);
     }
-  }, [onSuccess]);
+  }, [onSuccess, track]);
 
   const config: PlaidLinkOptions = {
     token: linkToken,
     onSuccess: handlePlaidSuccess,
     onExit: () => setLinkToken(null),
+    onEvent: (eventName: string) => {
+      if (eventName === "OPEN") {
+        track("bank_connect_started");
+      }
+    },
   };
 
   const { open, ready } = usePlaidLink(config);

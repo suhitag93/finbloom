@@ -1,6 +1,7 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 export interface Mission {
   id: string;
@@ -15,8 +16,10 @@ export interface Mission {
 
 export const useMissions = () => {
   const { user } = useAuth();
+  const { track } = useAnalytics();
   const [missions, setMissions] = useState<Mission[]>([]);
   const [loading, setLoading] = useState(true);
+  const prevCompletedRef = useRef<Set<string>>(new Set());
 
   const fetchMissions = useCallback(async () => {
     if (!user) {
@@ -47,9 +50,22 @@ export const useMissions = () => {
       };
     });
 
+    // Detect newly completed missions
+    const prevCompleted = prevCompletedRef.current;
+    mapped.forEach((m) => {
+      if (m.completed && !prevCompleted.has(m.id)) {
+        track("mission_completed", {
+          mission_id: m.id,
+          mission_type: m.mission_type,
+          xp_earned: m.xp_reward,
+        });
+      }
+    });
+    prevCompletedRef.current = new Set(mapped.filter((m) => m.completed).map((m) => m.id));
+
     setMissions(mapped);
     setLoading(false);
-  }, [user]);
+  }, [user, track]);
 
   useEffect(() => {
     fetchMissions();

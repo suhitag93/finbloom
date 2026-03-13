@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import WelcomeStep from "@/components/onboarding/WelcomeStep";
 import PersonalInfoStep from "@/components/onboarding/PersonalInfoStep";
 import DemographicsStep from "@/components/onboarding/DemographicsStep";
@@ -31,6 +32,7 @@ const TOTAL_STEPS = 8;
 const Onboarding = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { track } = useAnalytics();
   const [step, setStep] = useState(0);
   const [data, setData] = useState<OnboardingData>({
     fullName: "",
@@ -50,6 +52,11 @@ const Onboarding = () => {
   const back = () => setStep((s) => Math.max(s - 1, 0));
   const update = (partial: Partial<OnboardingData>) =>
     setData((prev) => ({ ...prev, ...partial }));
+
+  // Track onboarding_started on mount
+  useEffect(() => {
+    track("onboarding_started");
+  }, [track]);
 
   const computeLevel = () => {
     const accts = data.financialAccounts;
@@ -78,6 +85,10 @@ const Onboarding = () => {
       goals: data.goals,
       onboarding_completed: true,
     }).eq("user_id", user.id);
+    track("onboarding_completed", {
+      financial_confidence: data.financialConfidence,
+      goals: data.goals,
+    });
     navigate("/dashboard");
   };
 

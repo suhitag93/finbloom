@@ -18,6 +18,7 @@ import GardenLoadingScreen from "@/components/dashboard/GardenLoadingScreen";
 import { MobileDashboardAccordion } from "@/components/dashboard/MobileDashboardAccordion";
 import type { AccordionSection } from "@/components/dashboard/MobileDashboardAccordion";
 import { useProfile } from "@/hooks/useProfile";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import DemoBanner from "@/components/DemoBanner";
 import DemoTimedPrompt from "@/components/DemoConversionPrompts";
 
@@ -26,8 +27,20 @@ const SpendingOverview = lazy(() => import("@/components/dashboard/SpendingOverv
 const Dashboard = () => {
   const { profile, loading, firstName } = useProfile();
   const location = useLocation();
+  const { track } = useAnalytics();
   const [openAccordionIds, setOpenAccordionIds] = useState<string[]>(["overview"]);
   const [gardenComplete, setGardenComplete] = useState(false);
+
+  // Track dashboard_viewed once profile loads
+  useEffect(() => {
+    if (profile && !loading) {
+      track("dashboard_viewed", {
+        has_connected_bank: profile.connected_bank ?? false,
+        finbloom_level: profile.finbloom_level,
+        xp_points: profile.xp_points,
+      });
+    }
+  }, [profile, loading, track]);
 
   const toggleAccordion = useCallback((id: string) => {
     setOpenAccordionIds((prev) =>

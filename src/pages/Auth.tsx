@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import { toast } from "sonner";
 import FinBloomIcon from "@/components/FinBloomIcon";
 import { DEMO_PROFILES, loginDemoProfile } from "@/lib/demo-profiles";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -20,16 +21,27 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [demoLoading, setDemoLoading] = useState<string | null>(null);
 
+  const { identify } = useAnalytics();
+
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
-        // Check if onboarding is completed
+        // Check if onboarding is completed and identify user
         supabase
           .from("profiles")
-          .select("onboarding_completed")
+          .select("onboarding_completed, finbloom_level, xp_points, financial_personality, connected_bank")
           .eq("user_id", session.user.id)
           .single()
           .then(({ data }) => {
+            if (data) {
+              identify(session.user.id, {
+                finbloom_level: data.finbloom_level,
+                xp_points: data.xp_points,
+                financial_personality: data.financial_personality ?? undefined,
+                onboarding_completed: data.onboarding_completed ?? false,
+                connected_bank: data.connected_bank ?? false,
+              });
+            }
             if (data?.onboarding_completed) {
               navigate("/dashboard");
             } else {
@@ -39,7 +51,7 @@ const Auth = () => {
       }
     });
     return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, [navigate, identify]);
 
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
