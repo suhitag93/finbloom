@@ -50,9 +50,22 @@ export const useMissions = () => {
       };
     });
 
+    // Detect newly completed missions
+    const prevCompleted = prevCompletedRef.current;
+    mapped.forEach((m) => {
+      if (m.completed && !prevCompleted.has(m.id)) {
+        track("mission_completed", {
+          mission_id: m.id,
+          mission_type: m.mission_type,
+          xp_earned: m.xp_reward,
+        });
+      }
+    });
+    prevCompletedRef.current = new Set(mapped.filter((m) => m.completed).map((m) => m.id));
+
     setMissions(mapped);
     setLoading(false);
-  }, [user]);
+  }, [user, track]);
 
   useEffect(() => {
     fetchMissions();

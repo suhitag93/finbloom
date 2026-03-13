@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import { toast } from "sonner";
 import FinBloomIcon from "@/components/FinBloomIcon";
 import { DEMO_PROFILES, loginDemoProfile } from "@/lib/demo-profiles";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 const Auth = () => {
   const navigate = useNavigate();

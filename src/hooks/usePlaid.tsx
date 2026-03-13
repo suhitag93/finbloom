@@ -77,6 +77,11 @@ export const usePlaid = (onSuccess?: () => void) => {
     token: linkToken,
     onSuccess: handlePlaidSuccess,
     onExit: () => setLinkToken(null),
+    onEvent: (eventName: string) => {
+      if (eventName === "OPEN") {
+        track("bank_connect_started");
+      }
+    },
   };
 
   const { open, ready } = usePlaidLink(config);

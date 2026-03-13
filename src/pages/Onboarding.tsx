@@ -85,6 +85,10 @@ const Onboarding = () => {
       goals: data.goals,
       onboarding_completed: true,
     }).eq("user_id", user.id);
+    track("onboarding_completed", {
+      financial_confidence: data.financialConfidence,
+      goals: data.goals,
+    });
     navigate("/dashboard");
   };
 
