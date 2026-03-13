@@ -53,6 +53,11 @@ const Onboarding = () => {
   const update = (partial: Partial<OnboardingData>) =>
     setData((prev) => ({ ...prev, ...partial }));
 
+  // Track onboarding_started on mount
+  useEffect(() => {
+    track("onboarding_started");
+  }, [track]);
+
   const computeLevel = () => {
     const accts = data.financialAccounts;
     const hasInvestments = accts.some((a) =>
