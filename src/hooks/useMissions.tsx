@@ -16,8 +16,10 @@ export interface Mission {
 
 export const useMissions = () => {
   const { user } = useAuth();
+  const { track } = useAnalytics();
   const [missions, setMissions] = useState<Mission[]>([]);
   const [loading, setLoading] = useState(true);
+  const prevCompletedRef = useRef<Set<string>>(new Set());
 
   const fetchMissions = useCallback(async () => {
     if (!user) {
