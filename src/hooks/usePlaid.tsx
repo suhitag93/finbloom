@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { usePlaidLink, PlaidLinkOptions } from "react-plaid-link";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 export const usePlaid = (onSuccess?: () => void) => {
   const [linkToken, setLinkToken] = useState<string | null>(null);
