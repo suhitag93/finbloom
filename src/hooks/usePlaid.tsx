@@ -56,16 +56,22 @@ export const usePlaid = (onSuccess?: () => void) => {
 
       if (fetchError) throw fetchError;
 
+      track("bank_connect_completed", {
+        institution_name: metadata?.institution?.name ?? "unknown",
+        accounts_connected: fetchResult?.accounts_synced ?? 0,
+      });
+
       toast.success(`Connected ${metadata?.institution?.name || "bank"}! ${fetchResult?.accounts_synced || 0} accounts synced 🌱 +150 XP`);
       onSuccess?.();
     } catch (err) {
       console.error("Plaid connection failed:", err);
+      track("bank_connect_failed", { error_type: String(err) });
       toast.error("Failed to connect bank account");
     } finally {
       setSyncing(false);
       setLinkToken(null);
     }
-  }, [onSuccess]);
+  }, [onSuccess, track]);
 
   const config: PlaidLinkOptions = {
     token: linkToken,
