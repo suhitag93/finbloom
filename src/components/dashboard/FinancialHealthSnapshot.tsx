@@ -94,7 +94,9 @@ const FinancialHealthSnapshot = () => {
             const barScore = scoreBarMap[health.state];
             return (
               <div key={cat.label} className="flex items-center gap-2">
-                <span className="text-xs text-foreground w-16">{cat.label}</span>
+                <span className="text-xs text-foreground w-20 flex items-center gap-1">
+                  <span>{health.icon}</span> {cat.label}
+                </span>
                 <div className="flex-1 h-1.5 rounded-full bg-secondary overflow-hidden">
                   <motion.div
                     className={`h-full rounded-full ${cat.color}`}
