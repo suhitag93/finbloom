@@ -20,7 +20,7 @@ const BottomNavBar = () => {
         paddingBottom: "env(safe-area-inset-bottom, 0px)",
       }}
     >
-      <div className="flex items-center justify-around h-full max-w-md mx-auto px-2">
+      <div className="flex items-center justify-around h-full px-2">
         {tabs.map((tab) => {
           const isActive = location.pathname === tab.path;
           const Icon = tab.icon;
@@ -28,7 +28,7 @@ const BottomNavBar = () => {
             <button
               key={tab.id}
               onClick={() => navigate(tab.path)}
-              className="flex flex-col items-center justify-center gap-0.5 flex-1 py-1 transition-colors"
+              className="flex flex-col items-center justify-center gap-0.5 flex-1 min-h-[44px] min-w-[44px] py-1 transition-colors"
               aria-label={tab.label}
             >
               <Icon

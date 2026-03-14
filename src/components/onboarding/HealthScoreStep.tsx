@@ -50,62 +50,66 @@ const HealthScoreStep = ({ data, onNext, onBack }: Props) => {
   const strokeDashoffset = circumference - (animatedScore / 100) * circumference;
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <button onClick={onBack} className="text-muted-foreground hover:text-foreground transition-colors">
+    <div className="flex flex-col min-h-[calc(100dvh-80px)]">
+      <div className="flex items-center gap-3 mb-6">
+        <button onClick={onBack} className="text-muted-foreground hover:text-foreground transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div>
-          <h2 className="font-display text-2xl font-semibold text-foreground">Your FinBloom Score</h2>
+          <h2 className="font-display text-xl font-semibold text-foreground">Your FinBloom Score</h2>
           <p className="text-sm text-muted-foreground mt-1">Here's a snapshot of your financial health.</p>
         </div>
       </div>
 
-      <div className="flex justify-center py-4">
-        <div className="relative w-36 h-36">
-          <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
-            <circle cx="60" cy="60" r="54" fill="none" stroke="hsl(var(--muted))" strokeWidth="8" />
-            <motion.circle
-              cx="60" cy="60" r="54" fill="none"
-              stroke="hsl(var(--primary))"
-              strokeWidth="8"
-              strokeLinecap="round"
-              strokeDasharray={circumference}
-              initial={{ strokeDashoffset: circumference }}
-              animate={{ strokeDashoffset }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-            />
-          </svg>
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="font-display text-3xl font-bold text-foreground">{animatedScore}</span>
-            <span className="text-xs text-muted-foreground">/ 100</span>
+      <div className="flex-1">
+        <div className="flex justify-center py-4">
+          <div className="relative w-36 h-36">
+            <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="54" fill="none" stroke="hsl(var(--muted))" strokeWidth="8" />
+              <motion.circle
+                cx="60" cy="60" r="54" fill="none"
+                stroke="hsl(var(--primary))"
+                strokeWidth="8"
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                initial={{ strokeDashoffset: circumference }}
+                animate={{ strokeDashoffset }}
+                transition={{ duration: 1.2, ease: "easeOut" }}
+              />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <span className="font-display text-3xl font-bold text-foreground">{animatedScore}</span>
+              <span className="text-xs text-muted-foreground">/ 100</span>
+            </div>
           </div>
+        </div>
+
+        <div className="space-y-3">
+          {categories.map((cat) => {
+            const score = scores[cat.key as keyof typeof scores] as number;
+            return (
+              <div key={cat.key} className="flex items-center gap-4">
+                <span className="text-sm text-foreground w-40">{cat.label}</span>
+                <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
+                  <motion.div
+                    className="h-full rounded-full bg-gradient-sage"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${score}%` }}
+                    transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                  />
+                </div>
+                <span className="text-sm font-medium text-foreground w-8 text-right">{score}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      <div className="space-y-3">
-        {categories.map((cat) => {
-          const score = scores[cat.key as keyof typeof scores] as number;
-          return (
-            <div key={cat.key} className="flex items-center gap-4">
-              <span className="text-sm text-foreground w-40">{cat.label}</span>
-              <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
-                <motion.div
-                  className="h-full rounded-full bg-gradient-sage"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${score}%` }}
-                  transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-                />
-              </div>
-              <span className="text-sm font-medium text-foreground w-8 text-right">{score}</span>
-            </div>
-          );
-        })}
+      <div className="pt-4 pb-safe">
+        <Button variant="hero" size="lg" className="w-full" onClick={onNext}>
+          Set Your Goals
+        </Button>
       </div>
-
-      <Button variant="hero" size="lg" className="w-full" onClick={onNext}>
-        Set Your Goals
-      </Button>
     </div>
   );
 };

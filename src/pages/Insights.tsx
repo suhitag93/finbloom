@@ -11,8 +11,8 @@ const SpendingOverview = lazy(() => import("@/components/dashboard/SpendingOverv
 const Insights = () => (
   <>
     <DemoBanner />
-    <div className="p-4 space-y-3">
-      <h1 className="font-display text-2xl font-semibold text-foreground">Insights</h1>
+    <div className="px-4 py-4 space-y-3">
+      <h1 className="font-display text-xl font-semibold text-foreground">Insights</h1>
       <WeeklyCoaching />
       <WeeklyCheckIn />
       <Suspense fallback={<div className="h-48 rounded-2xl bg-secondary/30 animate-pulse" />}>

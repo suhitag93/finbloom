@@ -60,7 +60,6 @@
 
     /* Shadows */
     --shadow-soft: 0 2px 12px -2px hsl(152 22% 58% / 0.12);
-    --shadow-soft: 0 2px 12px -2px hsl(152 22% 58% / 0.12);
     --shadow-card: 0 4px 24px -4px hsl(200 15% 20% / 0.06);
     --shadow-glow: 0 0 20px hsl(152 22% 58% / 0.2);
 
@@ -85,6 +84,7 @@
   }
   body {
     @apply bg-background text-foreground font-body antialiased;
+    font-size: 14px;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
@@ -124,5 +124,8 @@
   }
   .shadow-glow {
     box-shadow: var(--shadow-glow);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
   }
 }

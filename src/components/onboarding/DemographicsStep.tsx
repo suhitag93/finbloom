@@ -80,18 +80,18 @@ const DemographicsStep = ({ data, update, onNext, onBack }: Props) => {
   const allAnswered = questions.every((q) => (data[q.key] as string).length > 0);
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <button onClick={onBack} className="text-muted-foreground hover:text-foreground transition-colors">
+    <div className="flex flex-col min-h-[calc(100dvh-80px)]">
+      <div className="flex items-center gap-3 mb-6">
+        <button onClick={onBack} className="text-muted-foreground hover:text-foreground transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div>
-          <h2 className="font-display text-2xl font-semibold text-foreground">Tell us about yourself</h2>
-          <p className="text-sm text-muted-foreground mt-1">This helps us personalize your experience. No exact details needed.</p>
+          <h2 className="font-display text-xl font-semibold text-foreground">Tell us about yourself</h2>
+          <p className="text-sm text-muted-foreground mt-1">This helps us personalize your experience.</p>
         </div>
       </div>
 
-      <div className="space-y-5">
+      <div className="flex-1 space-y-5">
         {questions.map((q) => (
           <div key={q.key} className="space-y-2">
             <label className="text-sm font-medium text-foreground">{q.label}</label>
@@ -100,7 +100,7 @@ const DemographicsStep = ({ data, update, onNext, onBack }: Props) => {
                 <button
                   key={opt.value}
                   onClick={() => update({ [q.key]: opt.value })}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border ${
+                  className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-200 border min-h-[44px] ${
                     data[q.key] === opt.value
                       ? "bg-primary text-primary-foreground border-primary shadow-soft"
                       : "bg-card text-foreground border-border hover:border-primary/40"
@@ -114,9 +114,11 @@ const DemographicsStep = ({ data, update, onNext, onBack }: Props) => {
         ))}
       </div>
 
-      <Button variant="hero" size="lg" className="w-full" onClick={onNext} disabled={!allAnswered}>
-        Continue
-      </Button>
+      <div className="pt-4 pb-safe">
+        <Button variant="hero" size="lg" className="w-full" onClick={onNext} disabled={!allAnswered}>
+          Continue
+        </Button>
+      </div>
     </div>
   );
 };
