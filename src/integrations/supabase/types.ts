@@ -472,51 +472,63 @@ export type Database = {
       }
       survey_responses: {
         Row: {
+          accounts_held: string[] | null
           age_group: string | null
           anything_else: string | null
           app_dropout_reasons: string[] | null
           biggest_barrier: string | null
           confident_self: string | null
           created_at: string | null
+          debt_situation: string | null
           dream_goal: string | null
           email: string | null
           engagement_drivers: string | null
           financial_journey: string | null
           id: string
+          income_range: string | null
+          money_behaviors: string[] | null
           money_feelings: string[] | null
           money_is: string | null
           money_upbringing: string | null
           motivation_ranking: string[] | null
         }
         Insert: {
+          accounts_held?: string[] | null
           age_group?: string | null
           anything_else?: string | null
           app_dropout_reasons?: string[] | null
           biggest_barrier?: string | null
           confident_self?: string | null
           created_at?: string | null
+          debt_situation?: string | null
           dream_goal?: string | null
           email?: string | null
           engagement_drivers?: string | null
           financial_journey?: string | null
           id?: string
+          income_range?: string | null
+          money_behaviors?: string[] | null
           money_feelings?: string[] | null
           money_is?: string | null
           money_upbringing?: string | null
           motivation_ranking?: string[] | null
         }
         Update: {
+          accounts_held?: string[] | null
           age_group?: string | null
           anything_else?: string | null
           app_dropout_reasons?: string[] | null
           biggest_barrier?: string | null
           confident_self?: string | null
           created_at?: string | null
+          debt_situation?: string | null
           dream_goal?: string | null
           email?: string | null
           engagement_drivers?: string | null
           financial_journey?: string | null
           id?: string
+          income_range?: string | null
+          money_behaviors?: string[] | null
           money_feelings?: string[] | null
           money_is?: string | null
           money_upbringing?: string | null
