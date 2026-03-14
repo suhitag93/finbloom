@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Zap, CheckCircle2, Circle } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useXP } from "@/hooks/useXP";
 import { useMissions } from "@/hooks/useMissions";
 
@@ -39,6 +40,7 @@ const GamifiedMissions = () => {
         {currentLevel.title}-level missions • Complete to earn XP and level up
       </p>
 
+      <ScrollArea className="max-h-[280px] pr-2">
       <div className="space-y-3">
         {missions.map((mission, i) => {
           const done = mission.completed;
@@ -80,6 +82,7 @@ const GamifiedMissions = () => {
           );
         })}
       </div>
+      </ScrollArea>
     </motion.div>
   );
 };
