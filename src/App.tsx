@@ -4,15 +4,15 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/AppSidebar";
-import MobileHeader from "@/components/MobileHeader";
+import BottomNavBar from "@/components/BottomNavBar";
 import Navbar from "@/components/Navbar";
 import LandingPage from "./pages/LandingPage";
 import Auth from "./pages/Auth";
 import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
-import Settings from "./pages/Settings";
+import Missions from "./pages/Missions";
+import Insights from "./pages/Insights";
+import Profile from "./pages/Profile";
 import Survey from "./pages/Survey";
 import NotFound from "./pages/NotFound";
 
@@ -25,26 +25,21 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
-const SidebarLayout = ({ children }: { children: React.ReactNode }) => (
-  <SidebarProvider>
-    <div className="min-h-screen flex w-full">
-      {/* Desktop sidebar — hidden on mobile */}
-      <div className="hidden md:block">
-        <AppSidebar />
-      </div>
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Mobile header with hamburger + nav drawer */}
-        <MobileHeader />
-        <main className="flex-1">{children}</main>
-      </div>
+/** Mobile app shell with bottom nav + scrollable content */
+const MobileAppShell = ({ children }: { children: React.ReactNode }) => (
+  <div className="flex flex-col overflow-hidden bg-background" style={{ height: "100dvh" }}>
+    <div className="flex-1 overflow-y-auto" style={{ WebkitOverflowScrolling: "touch" }}>
+      {children}
     </div>
-  </SidebarProvider>
+    <BottomNavBar />
+  </div>
 );
 
 const AppLayout = () => {
   const location = useLocation();
-  const showSidebar = ["/dashboard", "/settings"].includes(location.pathname);
-  const hideNav = showSidebar || ["/onboarding", "/auth", "/survey"].includes(location.pathname);
+  const appShellPaths = ["/dashboard", "/missions", "/insights", "/profile"];
+  const isAppShell = appShellPaths.includes(location.pathname);
+  const hideNav = isAppShell || ["/onboarding", "/auth", "/survey"].includes(location.pathname);
 
   return (
     <>
@@ -65,22 +60,44 @@ const AppLayout = () => {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <SidebarLayout>
+              <MobileAppShell>
                 <Dashboard />
-              </SidebarLayout>
+              </MobileAppShell>
             </ProtectedRoute>
           }
         />
         <Route
-          path="/settings"
+          path="/missions"
           element={
             <ProtectedRoute>
-              <SidebarLayout>
-                <Settings />
-              </SidebarLayout>
+              <MobileAppShell>
+                <Missions />
+              </MobileAppShell>
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/insights"
+          element={
+            <ProtectedRoute>
+              <MobileAppShell>
+                <Insights />
+              </MobileAppShell>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <MobileAppShell>
+                <Profile />
+              </MobileAppShell>
+            </ProtectedRoute>
+          }
+        />
+        {/* Keep /settings as alias for profile */}
+        <Route path="/settings" element={<Navigate to="/profile" replace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
