@@ -18,12 +18,12 @@ const WeeklyCheckIn = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
-      className="p-6 rounded-2xl bg-card border border-border relative overflow-hidden h-full flex flex-col"
+      className="p-4 rounded-2xl bg-card border border-border relative overflow-hidden"
     >
       {/* Subtle accent stripe */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary/40" />
 
-      <div className="flex items-center gap-2 mb-5">
+      <div className="flex items-center gap-2 mb-4">
         <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
           <CalendarCheck className="w-4 h-4 text-primary" />
         </div>
@@ -36,7 +36,7 @@ const WeeklyCheckIn = () => {
       </div>
 
       {/* Summary grid */}
-      <div className="grid grid-cols-3 gap-3 mb-5">
+      <div className="grid grid-cols-3 gap-2 mb-4">
         {summaryItems.map((item, i) => (
           <motion.div
             key={item.label}
@@ -62,12 +62,12 @@ const WeeklyCheckIn = () => {
           >
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Zap className="w-3.5 h-3.5 text-accent" />
-              <span>+{xpReward} XP on completion</span>
+              <span>+{xpReward} XP</span>
             </div>
             <Button
               size="sm"
               variant="hero"
-              className="rounded-full text-xs px-4"
+              className="rounded-full text-sm px-4 min-h-[44px]"
               onClick={() => setCompleted(true)}
             >
               <Sparkles className="w-3.5 h-3.5 mr-1" />
