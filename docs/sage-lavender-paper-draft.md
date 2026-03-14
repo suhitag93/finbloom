@@ -1,7 +1,7 @@
 # Two Minds, One Goal: A Dual-Agent Architecture for Emotionally-Intelligent Financial Guidance
 
 **Draft — Working Document**
-*[Author] · GrowWithFinbloom · 2026*
+*Author: Suhita Goswami · finBloom · Mar 2026
 
 ---
 
