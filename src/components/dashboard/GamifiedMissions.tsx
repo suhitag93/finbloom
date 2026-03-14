@@ -40,7 +40,7 @@ const GamifiedMissions = () => {
         {currentLevel.title}-level missions • Complete to earn XP and level up
       </p>
 
-      <ScrollArea className="max-h-[280px] pr-2">
+      <div className="flex-1 min-h-0 overflow-y-auto pr-2">
       <div className="space-y-3">
         {missions.map((mission, i) => {
           const done = mission.completed;
