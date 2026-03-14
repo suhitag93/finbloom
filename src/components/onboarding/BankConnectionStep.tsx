@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { OnboardingData } from "@/pages/Onboarding";
-import { ArrowLeft, Building2, Shield, Zap } from "lucide-react";
+import { ArrowLeft, Building2, Shield, Zap, Loader2 } from "lucide-react";
+import { usePlaid } from "@/hooks/usePlaid";
 
 interface Props {
   data: OnboardingData;
@@ -10,10 +12,13 @@ interface Props {
 }
 
 const BankConnectionStep = ({ data, update, onNext, onBack }: Props) => {
-  const handleConnect = () => {
-    // Placeholder for Plaid integration — simulates successful connection
+  const { startPlaidLink, openWhenReady, loading, syncing, ready: plaidReady } = usePlaid(() => {
     update({ connectedBank: true });
-  };
+  });
+
+  useEffect(() => {
+    if (plaidReady) openWhenReady();
+  }, [plaidReady, openWhenReady]);
 
   return (
     <div className="space-y-6">
@@ -57,8 +62,10 @@ const BankConnectionStep = ({ data, update, onNext, onBack }: Props) => {
             <p className="text-sm font-medium text-primary">✓ Accounts connected successfully</p>
           </div>
         ) : (
-          <Button variant="hero" size="lg" className="w-full" onClick={handleConnect}>
-            Connect Bank Account
+          <Button variant="hero" size="lg" className="w-full" onClick={startPlaidLink} disabled={loading || syncing}>
+            {loading ? <><Loader2 className="w-4 h-4 animate-spin mr-2" /> Initializing…</> 
+              : syncing ? <><Loader2 className="w-4 h-4 animate-spin mr-2" /> Syncing accounts…</>
+              : "Connect Bank Account"}
           </Button>
         )}
       </div>
