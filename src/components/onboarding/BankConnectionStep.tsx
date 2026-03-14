@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { OnboardingData } from "@/pages/Onboarding";
-import { ArrowLeft, Building2, Shield, Zap } from "lucide-react";
+import { ArrowLeft, Building2, Shield, Zap, Loader2 } from "lucide-react";
+import { usePlaid } from "@/hooks/usePlaid";
 
 interface Props {
   data: OnboardingData;
@@ -10,10 +12,13 @@ interface Props {
 }
 
 const BankConnectionStep = ({ data, update, onNext, onBack }: Props) => {
-  const handleConnect = () => {
-    // Placeholder for Plaid integration — simulates successful connection
+  const { startPlaidLink, openWhenReady, loading, syncing, ready: plaidReady } = usePlaid(() => {
     update({ connectedBank: true });
-  };
+  });
+
+  useEffect(() => {
+    if (plaidReady) openWhenReady();
+  }, [plaidReady, openWhenReady]);
 
   return (
     <div className="space-y-6">
