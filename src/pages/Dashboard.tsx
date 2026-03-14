@@ -7,7 +7,6 @@ import SavingsBuckets from "@/components/dashboard/SavingsBuckets";
 import GardenLoadingScreen from "@/components/dashboard/GardenLoadingScreen";
 import { useProfile } from "@/hooks/useProfile";
 import { useAnalytics } from "@/hooks/useAnalytics";
-import DemoBanner from "@/components/DemoBanner";
 import DemoTimedPrompt from "@/components/DemoConversionPrompts";
 
 const Dashboard = () => {
@@ -31,7 +30,6 @@ const Dashboard = () => {
 
   return (
     <>
-      <DemoBanner />
       <div className="px-4 py-4 space-y-3">
         <UserLevelHeader firstName={firstName} />
         <FinancialHealthSnapshot />

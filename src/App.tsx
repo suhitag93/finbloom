@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-route
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import BottomNavBar from "@/components/BottomNavBar";
 import Navbar from "@/components/Navbar";
+import DemoBanner from "@/components/DemoBanner";
 import LandingPage from "./pages/LandingPage";
 import Auth from "./pages/Auth";
 import Onboarding from "./pages/Onboarding";
@@ -28,6 +29,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 /** Mobile app shell with bottom nav + scrollable content */
 const MobileAppShell = ({ children }: { children: React.ReactNode }) => (
   <div className="flex flex-col overflow-hidden bg-background" style={{ height: "100dvh" }}>
+    <DemoBanner />
     <div className="flex-1 overflow-y-auto" style={{ WebkitOverflowScrolling: "touch" }}>
       {children}
     </div>
