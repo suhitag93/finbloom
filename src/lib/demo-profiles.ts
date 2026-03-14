@@ -126,18 +126,10 @@ async function seedBloomProfile(userId: string) {
     // account must be seeded via a server-side Edge Function that uses the
     // service role key (see supabase/functions/seed-demo-account/).
 
-    // Missions
-    const { data: missionsList } = await supabase.from("missions").select("id").limit(4);
-    if (missionsList && missionsList.length > 0) {
-      await supabase.from("user_missions").insert(
-        missionsList.map((m, i) => ({
-          user_id: userId, mission_id: m.id,
-          progress_value: i < 2 ? 100 : Math.floor(Math.random() * 60) + 20,
-          completed: i < 2,
-          completed_at: i < 2 ? new Date().toISOString() : null,
-        }))
-      );
-    }
+    // Mission progress writes are intentionally omitted here: user_missions no
+    // longer allows client-side INSERT or UPDATE.  Demo mission seeding must be
+    // performed by a server-side Edge Function using the service role key
+    // (see supabase/functions/seed-demo-account/).
   }
 
   const { data: existing } = await supabase.from("accounts").select("id").eq("user_id", userId).limit(1);
@@ -201,17 +193,10 @@ async function seedFlourishProfile(userId: string) {
     // account must be seeded via a server-side Edge Function that uses the
     // service role key (see supabase/functions/seed-demo-account/).
 
-    // All missions completed
-    const { data: missionsList } = await supabase.from("missions").select("id");
-    if (missionsList && missionsList.length > 0) {
-      await supabase.from("user_missions").insert(
-        missionsList.map((m) => ({
-          user_id: userId, mission_id: m.id,
-          progress_value: 100, completed: true,
-          completed_at: new Date().toISOString(),
-        }))
-      );
-    }
+    // Mission progress writes are intentionally omitted here: user_missions no
+    // longer allows client-side INSERT or UPDATE.  Demo mission seeding must be
+    // performed by a server-side Edge Function using the service role key
+    // (see supabase/functions/seed-demo-account/).
   }
 
   const { data: existing } = await supabase.from("accounts").select("id").eq("user_id", userId).limit(1);
