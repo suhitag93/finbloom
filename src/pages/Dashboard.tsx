@@ -137,43 +137,49 @@ const Dashboard = () => {
         {/* ===== MOBILE: Accordion layout ===== */}
         <MobileDashboardAccordion sections={mobileAccordionSections} openIds={openAccordionIds} onToggle={toggleAccordion} />
 
-        {/* ===== DESKTOP: Original grid layout ===== */}
-        <div className="hidden md:block space-y-6">
-          <div id="spending" className="grid lg:grid-cols-2 gap-6 scroll-mt-4">
-            <FinancialHealthSnapshot />
-            <Suspense fallback={<div className="h-64 rounded-2xl bg-card animate-pulse" />}>
-              <SpendingOverview />
-            </Suspense>
+        {/* ===== DESKTOP: Single-column rows ===== */}
+        <div className="hidden md:flex flex-col gap-6">
+          {/* Row 1: Financial Health + Active Missions */}
+          <div id="spending" className="flex gap-4 scroll-mt-4">
+            <div className="flex-1 min-w-0"><FinancialHealthSnapshot /></div>
+            <div className="flex-1 min-w-0"><GamifiedMissions /></div>
           </div>
 
-          <div id="coaching" className="grid lg:grid-cols-2 gap-6 scroll-mt-6">
-            <WeeklyCoaching />
-            <WeeklyCheckIn />
+          {/* Row 2: Weekly Insights + Bloom Weekly Review */}
+          <div id="coaching" className="flex gap-4 scroll-mt-6">
+            <div className="flex-1 min-w-0"><WeeklyCoaching /></div>
+            <div className="flex-1 min-w-0"><WeeklyCheckIn /></div>
           </div>
 
+          {/* Row 3: Savings (full width) */}
+          <SavingsBuckets />
+
+          {/* Remaining sections */}
           <div id="goals" className="scroll-mt-6">
             <GoalTracker goals={profile?.goals} />
           </div>
 
-          <div id="missions" className="grid lg:grid-cols-2 gap-6 scroll-mt-6">
-            <GamifiedMissions />
+          <div className="flex gap-4">
+            <div className="flex-1 min-w-0">
+              <Suspense fallback={<div className="h-64 rounded-2xl bg-card animate-pulse" />}>
+                <SpendingOverview />
+              </Suspense>
+            </div>
+            <div className="flex-1 min-w-0"><RecommendationCard /></div>
           </div>
 
-          <div id="achievements" className="grid lg:grid-cols-2 gap-6 scroll-mt-6">
-            <LevelProgressionMap />
-            <AchievementsBadges />
+          <div id="achievements" className="flex gap-4 scroll-mt-6">
+            <div className="flex-1 min-w-0"><LevelProgressionMap /></div>
+            <div className="flex-1 min-w-0"><AchievementsBadges /></div>
           </div>
 
-          <div id="networth" className="grid lg:grid-cols-2 gap-6 scroll-mt-6">
-            <NetWorthCard />
-            <MonthlyReport />
+          <div id="networth" className="flex gap-4 scroll-mt-6">
+            <div className="flex-1 min-w-0"><NetWorthCard /></div>
+            <div className="flex-1 min-w-0"><MonthlyReport /></div>
           </div>
 
-          <SavingsBuckets />
-
-          <div id="alerts" className="grid lg:grid-cols-2 gap-6 scroll-mt-6">
+          <div id="alerts" className="scroll-mt-6">
             <SmartAlerts />
-            <RecommendationCard />
           </div>
         </div>
       </div>
