@@ -14,7 +14,7 @@ const WeeklyCoaching = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
-      className="p-6 rounded-2xl bg-lavender-light border border-accent/20"
+      className="p-6 rounded-2xl bg-lavender-light border border-accent/20 h-full flex flex-col"
     >
       <div className="flex items-center gap-2 mb-4">
         <div className="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center">
@@ -25,7 +25,7 @@ const WeeklyCoaching = () => {
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-3 flex-1 min-h-0 overflow-y-auto">
         {insights.map((insight, i) => (
           <motion.div
             key={i}

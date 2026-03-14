@@ -140,13 +140,13 @@ const Dashboard = () => {
         {/* ===== DESKTOP: Single-column rows ===== */}
         <div className="hidden md:flex flex-col gap-6">
           {/* Row 1: Financial Health + Active Missions */}
-          <div id="spending" className="flex gap-4 scroll-mt-4">
+          <div id="spending" className="flex gap-4 items-stretch scroll-mt-4">
             <div className="flex-1 min-w-0"><FinancialHealthSnapshot /></div>
             <div className="flex-1 min-w-0"><GamifiedMissions /></div>
           </div>
 
           {/* Row 2: Weekly Insights + Bloom Weekly Review */}
-          <div id="coaching" className="flex gap-4 scroll-mt-6">
+          <div id="coaching" className="flex gap-4 items-stretch scroll-mt-6">
             <div className="flex-1 min-w-0"><WeeklyCoaching /></div>
             <div className="flex-1 min-w-0"><WeeklyCheckIn /></div>
           </div>

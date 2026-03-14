@@ -18,7 +18,7 @@ const WeeklyCheckIn = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
-      className="p-6 rounded-2xl bg-card border border-border relative overflow-hidden"
+      className="p-6 rounded-2xl bg-card border border-border relative overflow-hidden h-full flex flex-col"
     >
       {/* Subtle accent stripe */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary/40" />
