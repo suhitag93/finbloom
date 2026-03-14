@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Zap, CheckCircle2, Circle } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
+
 import { useXP } from "@/hooks/useXP";
 import { useMissions } from "@/hooks/useMissions";
 
