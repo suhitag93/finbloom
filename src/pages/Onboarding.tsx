@@ -53,7 +53,6 @@ const Onboarding = () => {
   const update = (partial: Partial<OnboardingData>) =>
     setData((prev) => ({ ...prev, ...partial }));
 
-  // Track onboarding_started on mount
   useEffect(() => {
     track("onboarding_started");
   }, [track]);
@@ -98,20 +97,34 @@ const Onboarding = () => {
     exit: { opacity: 0, x: -40 },
   };
 
+  // Progress dots (steps 1-6, not welcome or final)
+  const showProgress = step > 0 && step < TOTAL_STEPS - 1;
+  const progressSteps = TOTAL_STEPS - 2; // 6 steps with dots
+
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      {step > 0 && step < TOTAL_STEPS - 1 && (
-        <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-muted">
-          <motion.div
-            className="h-full bg-gradient-sage rounded-r-full"
-            initial={{ width: 0 }}
-            animate={{ width: `${((step) / (TOTAL_STEPS - 1)) * 100}%` }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-          />
+    <div className="flex flex-col bg-background" style={{ height: "100dvh" }}>
+      {/* Progress indicator */}
+      {showProgress && (
+        <div className="shrink-0 px-4 pt-4 pb-2">
+          <div className="flex items-center justify-center gap-2">
+            {Array.from({ length: progressSteps }).map((_, i) => (
+              <div
+                key={i}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i < step
+                    ? "w-6 bg-primary"
+                    : i === step
+                    ? "w-6 bg-primary/60"
+                    : "w-1.5 bg-muted"
+                }`}
+              />
+            ))}
+          </div>
         </div>
       )}
 
-      <div className="flex-1 flex items-center justify-center px-4 py-12">
+      {/* Scrollable content */}
+      <div className="flex-1 overflow-y-auto px-4" style={{ WebkitOverflowScrolling: "touch" }}>
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
@@ -120,7 +133,7 @@ const Onboarding = () => {
             animate="center"
             exit="exit"
             transition={{ duration: 0.35, ease: "easeInOut" }}
-            className="w-full max-w-xl"
+            className="w-full max-w-lg mx-auto py-6"
           >
             {step === 0 && <WelcomeStep onNext={next} />}
             {step === 1 && (

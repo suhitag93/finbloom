@@ -77,10 +77,8 @@ const HeroSection = () => {
                 Grow your financial life like a garden. Earn XP for real money moves, level up through growth stages, and watch your wealth blossom — one habit at a time.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button variant="hero" size="lg" asChild>
-                  <Link to="/auth" className="gap-2">
+                <Button variant="hero" size="lg" onClick={handleDemoLogin} disabled={demoLoading} className="gap-2">
                     Plant Your First Seed <ArrowRight className="w-4 h-4" />
-                  </Link>
                 </Button>
                 <Button variant="hero-outline" size="lg" asChild>
                   <a href="#how-it-works">See How It Works</a>

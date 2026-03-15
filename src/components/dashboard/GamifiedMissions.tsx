@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Zap, CheckCircle2, Circle } from "lucide-react";
+
 import { useXP } from "@/hooks/useXP";
 import { useMissions } from "@/hooks/useMissions";
 
@@ -10,7 +11,7 @@ const GamifiedMissions = () => {
 
   if (loading) {
     return (
-      <div className="p-6 rounded-2xl bg-card shadow-card border border-border/50 animate-pulse">
+      <div className="p-4 rounded-2xl bg-card shadow-card border border-border/50 animate-pulse">
         <div className="h-6 bg-secondary rounded w-1/3 mb-4" />
         <div className="space-y-3">
           {[1, 2, 3].map((i) => (
@@ -26,7 +27,7 @@ const GamifiedMissions = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
-      className="p-6 rounded-2xl bg-card shadow-card border border-border/50"
+      className="p-4 rounded-2xl bg-card shadow-card border border-border/50"
     >
       <div className="flex items-center justify-between mb-1">
         <h3 className="font-display text-lg font-semibold text-foreground">Active Missions</h3>
@@ -35,7 +36,7 @@ const GamifiedMissions = () => {
           {totalAvailableXP} XP available
         </div>
       </div>
-      <p className="text-[11px] text-muted-foreground mb-4">
+      <p className="text-xs text-muted-foreground mb-4">
         {currentLevel.title}-level missions • Complete to earn XP and level up
       </p>
 
@@ -48,10 +49,10 @@ const GamifiedMissions = () => {
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.4 + i * 0.08 }}
-              className={`flex items-center gap-3 p-3 rounded-xl border transition-colors ${
+              className={`flex items-center gap-3 p-3 rounded-xl border transition-colors min-h-[52px] ${
                 done
                   ? "bg-primary/5 border-primary/20"
-                  : "bg-secondary/30 border-border/50 hover:border-primary/30"
+                  : "bg-secondary/30 border-border/50"
               }`}
             >
               {done ? (
