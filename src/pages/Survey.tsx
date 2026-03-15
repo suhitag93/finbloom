@@ -113,6 +113,7 @@ const QUESTIONS: QuestionDef[] = [
       "It just doesn't hold my attention for long",
       "I second-guess my instincts when it comes to decisions",
       "I'm telling myself I'll start once I'm earning more",
+      "Actually I'm pretty engaged — I just want to go further",
     ],
     required: true,
   },
