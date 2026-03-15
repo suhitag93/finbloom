@@ -129,7 +129,7 @@ const QUESTIONS: QuestionDef[] = [
       "It didn't match how I actually think about money",
       "Life got busy and I lost the habit",
       "I haven't tried one yet",
-      "I'm still using one regularly — it works for me!",
+      "I use one regularly and it works for me",
     ],
     required: true,
   },
