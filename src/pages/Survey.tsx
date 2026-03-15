@@ -115,6 +115,7 @@ const QUESTIONS: QuestionDef[] = [
       "I second-guess my instincts when it comes to decisions",
       "I'm telling myself I'll start once I'm earning more",
       "Actually I'm pretty engaged — I just want to go further",
+      "My partner handles it — it's not really on my plate right now",
     ],
     required: true,
   },
