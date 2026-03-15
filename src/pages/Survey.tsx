@@ -27,13 +27,31 @@ const QUESTIONS: QuestionDef[] = [
     subtitle:
       "5 minutes. Completely anonymous. Your answers will directly shape an app built for women like you.",
   },
+  // ── Demographics ──────────────────────────────────────────
   {
     id: "age_group",
     type: "single",
     title: "How old are you?",
-    options: ["Under 25", "25-34", "35-44", "45-54", "55+"],
+    options: ["Under 25", "25–34", "35–44", "45–54", "55+"],
     required: true,
   },
+  {
+    id: "income_range",
+    type: "single",
+    title: "Which best describes your current income?",
+    subtitle: "This helps us understand the financial realities you're working with.",
+    options: [
+      "Under £20k / $25k",
+      "£20k–£35k / $25k–$45k",
+      "£35k–£55k / $45k–$70k",
+      "£55k–£80k / $70k–$100k",
+      "Over £80k / $100k",
+      "Variable — freelance or self-employed",
+      "Not in paid work right now",
+    ],
+    required: true,
+  },
+  // ── Current financial stage ───────────────────────────────
   {
     id: "financial_journey",
     type: "single",
@@ -78,7 +96,7 @@ const QUESTIONS: QuestionDef[] = [
   {
     id: "money_is",
     type: "text",
-    title: 'Finish this sentence: Money is...',
+    title: "Finish this sentence: Money is...",
     placeholder: "No filter needed. Whatever comes to mind...",
     required: true,
   },
@@ -95,6 +113,39 @@ const QUESTIONS: QuestionDef[] = [
     ],
     required: true,
   },
+  // ── Current money behaviors ───────────────────────────────
+  {
+    id: "money_behaviors",
+    type: "multi",
+    title: "How do you currently manage your money day-to-day?",
+    subtitle: "Select all that apply — be honest, there's no wrong answer.",
+    options: [
+      "I track every transaction in a spreadsheet or app",
+      "I have a rough budget I loosely follow",
+      "I check my balance regularly but don't formally budget",
+      "I pay bills and hope the rest sorts itself out",
+      "I automate savings and don't think about it much",
+      "I review my finances at the end of each month",
+      "I avoid looking at my finances as much as possible",
+    ],
+    required: true,
+  },
+  // ── Debt context ─────────────────────────────────────────
+  {
+    id: "debt_situation",
+    type: "single",
+    title: "If debt is part of your story right now, which feels most true?",
+    subtitle: "Select 'Not applicable' if debt isn't a current factor.",
+    options: [
+      "I'm managing it fine — on track with repayments",
+      "It's a background stress I try not to think about",
+      "It feels like it's stopping me from moving forward",
+      "I'm actively working on paying it down",
+      "Not applicable — debt isn't part of my picture right now",
+    ],
+    required: true,
+  },
+  // ── Vision ────────────────────────────────────────────────
   {
     id: "confident_self",
     type: "text",
@@ -103,6 +154,7 @@ const QUESTIONS: QuestionDef[] = [
       "She checks in on her money weekly without dread. She invests without second-guessing herself...",
     required: true,
   },
+  // ── Pain points & motivation ─────────────────────────────
   {
     id: "biggest_barrier",
     type: "single",
@@ -175,6 +227,7 @@ const QUESTIONS: QuestionDef[] = [
     placeholder: "This is your space. Say anything...",
     required: false,
   },
+  // ── Email capture ────────────────────────────────────────
   {
     id: "email",
     type: "email",
@@ -453,9 +506,14 @@ const QuestionScreen = ({
     case "single":
       return (
         <div className="space-y-6">
-          <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground leading-tight">
-            {question.title}
-          </h2>
+          <div>
+            <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground leading-tight">
+              {question.title}
+            </h2>
+            {question.subtitle && (
+              <p className="text-muted-foreground text-sm mt-2">{question.subtitle}</p>
+            )}
+          </div>
           <div className="space-y-2.5">
             {question.options?.map((opt) => (
               <button
