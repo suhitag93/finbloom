@@ -56,6 +56,7 @@ const QUESTIONS: QuestionDef[] = [
       "More time — I get it, I just need it to be faster and easier",
       "More accountability — I need something to keep me on track",
       "More of everything — I'm starting from scratch",
+      "My partner manages our finances — I'd like to be more involved",
     ],
     required: true,
   },
