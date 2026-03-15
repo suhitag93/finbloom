@@ -47,6 +47,19 @@ const QUESTIONS: QuestionDef[] = [
     required: true,
   },
   {
+    id: "biggest_difference",
+    type: "single",
+    title: "What would make the biggest difference to your financial life right now?",
+    options: [
+      "More knowledge — I want to understand how money works",
+      "More confidence — I know what to do, I just can't make myself act",
+      "More time — I get it, I just need it to be faster and easier",
+      "More accountability — I need something to keep me on track",
+      "More of everything — I'm starting from scratch",
+    ],
+    required: true,
+  },
+  {
     id: "money_feelings",
     type: "multi",
     title: "When you think about your personal finances, what comes up for you?",
