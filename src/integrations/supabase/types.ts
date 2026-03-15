@@ -477,6 +477,7 @@ export type Database = {
           anything_else: string | null
           app_dropout_reasons: string[] | null
           biggest_barrier: string | null
+          biggest_difference: string | null
           confident_self: string | null
           created_at: string | null
           debt_situation: string | null
@@ -498,6 +499,7 @@ export type Database = {
           anything_else?: string | null
           app_dropout_reasons?: string[] | null
           biggest_barrier?: string | null
+          biggest_difference?: string | null
           confident_self?: string | null
           created_at?: string | null
           debt_situation?: string | null
@@ -519,6 +521,7 @@ export type Database = {
           anything_else?: string | null
           app_dropout_reasons?: string[] | null
           biggest_barrier?: string | null
+          biggest_difference?: string | null
           confident_self?: string | null
           created_at?: string | null
           debt_situation?: string | null
