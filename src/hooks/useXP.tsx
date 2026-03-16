@@ -6,7 +6,6 @@ import {
   getLevelForXP,
   getNextLevel,
   getLevelProgress,
-  getStreakMultiplier,
   LEVELS,
   type XPLevel,
 } from "@/lib/xp-system";
@@ -72,9 +71,6 @@ export const useXP = () => {
   const nextLevel = getNextLevel(totalXP);
   const progress = getLevelProgress(totalXP);
 
-  const streakDays = 12; // TODO: implement streak tracking
-  const multiplier = getStreakMultiplier(streakDays);
-
   const earnedBadges = badges.filter((b) => b.earned);
   const lockedBadges = badges.filter((b) => !b.earned);
 
@@ -83,8 +79,6 @@ export const useXP = () => {
     currentLevel,
     nextLevel,
     progress,
-    streakDays,
-    multiplier,
     badges,
     earnedBadges,
     lockedBadges,

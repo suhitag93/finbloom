@@ -54,7 +54,6 @@ export const XP_ACTIONS: XPAction[] = [
   { id: "pay_debt", label: "Pay down debt", xp: 50, category: "debt" },
   { id: "increase_savings", label: "Increase savings rate", xp: 100, category: "saving" },
   { id: "start_investing", label: "Start investing", xp: 250, category: "investing" },
-  { id: "login_streak_3", label: "3-day login streak", xp: 20, category: "engagement" },
 ];
 
 export interface Badge {
@@ -84,9 +83,9 @@ export const ALL_BADGES: Badge[] = [
   { id: "nw_10k", title: "Foundation", emoji: "🧱", description: "$10K net worth", xpBonus: 500, category: "milestones", earned: true, earnedDate: "2026-02-10" },
   { id: "nw_50k", title: "Momentum", emoji: "⚡", description: "$50K net worth", xpBonus: 1000, category: "milestones", earned: false },
   // Engagement
-  { id: "streak_7", title: "Week Warrior", emoji: "🔥", description: "7-day login streak", xpBonus: 30, category: "engagement", earned: true, earnedDate: "2026-03-05" },
-  { id: "streak_30", title: "Monthly Master", emoji: "💎", description: "30-day login streak", xpBonus: 100, category: "engagement", earned: false },
   { id: "mission_10", title: "Mission Maven", emoji: "🎯", description: "Complete 10 missions", xpBonus: 75, category: "engagement", earned: true, earnedDate: "2026-03-07" },
+  { id: "weekly_5", title: "Consistent Bloomer", emoji: "🌸", description: "Complete 5 weekly check-ins", xpBonus: 50, category: "engagement", earned: false },
+  { id: "weekly_10", title: "Money Ritual", emoji: "✨", description: "Complete 10 weekly check-ins", xpBonus: 100, category: "engagement", earned: false },
 ];
 
 /** Get level for a given XP total */
@@ -116,10 +115,3 @@ export function getLevelProgress(xp: number): number {
   return Math.min(100, Math.round((progress / range) * 100));
 }
 
-/** Streak multiplier */
-export function getStreakMultiplier(streakDays: number): number {
-  if (streakDays >= 30) return 1.5;
-  if (streakDays >= 7) return 1.2;
-  if (streakDays >= 3) return 1.1;
-  return 1.0;
-}

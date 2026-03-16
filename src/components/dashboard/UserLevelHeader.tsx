@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { Flame, Zap, TrendingUp } from "lucide-react";
+import { Zap } from "lucide-react";
 import { useXP } from "@/hooks/useXP";
 
 const UserLevelHeader = ({ firstName }: { firstName: string }) => {
-  const { totalXP, currentLevel, nextLevel, progress, streakDays, multiplier } = useXP();
+  const { totalXP, currentLevel, nextLevel, progress } = useXP();
 
   return (
     <motion.div
@@ -22,19 +22,7 @@ const UserLevelHeader = ({ firstName }: { firstName: string }) => {
               {currentLevel.emoji} {currentLevel.title}
             </span>
             <span className="text-border">•</span>
-            <span className="inline-flex items-center gap-1">
-              <Flame className="w-3 h-3 text-destructive" />
-              {streakDays}-day streak
-            </span>
-            {multiplier > 1 && (
-              <>
-                <span className="text-border">•</span>
-                <span className="inline-flex items-center gap-1 text-success font-medium">
-                  <TrendingUp className="w-3 h-3" />
-                  {multiplier}x XP
-                </span>
-              </>
-            )}
+            <span className="hidden sm:inline text-muted-foreground">{currentLevel.focus}</span>
           </div>
         </div>
         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-accent/10 text-accent text-xs font-medium shrink-0">
