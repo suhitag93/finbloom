@@ -13,7 +13,7 @@ Most financial technology applications approach behavior change through a single
 
 ## 1. The Problem With Financial AI Today
 
-When I started building GrowWithFinbloom, I was trying to solve what felt like a straightforward problem: most people know they should be saving more, spending less, and investing earlier. The information is widely available. The tools exist. Yet financial anxiety remains the leading source of stress for adults in the United States, and fewer than half of Americans could cover a $1,000 emergency expense from savings.
+When I started building finBloom, I was trying to solve what felt like a straightforward problem: most people know they should be saving more, spending less, and investing earlier. The information is widely available. The tools exist. Yet financial anxiety remains the leading source of stress for adults in the United States, and fewer than half of Americans could cover a $1,000 emergency expense from savings[1].
 
 The gap between knowing and doing in personal finance is one of the most studied phenomena in behavioral economics. Thaler and Sunstein's work on choice architecture, Ariely's research on predictable irrationality, and Klontz's decades of clinical work on money scripts all point to the same conclusion: financial behavior is not primarily a rational information problem. It is a psychological and emotional one.
 
@@ -188,7 +188,7 @@ That is a harder system to build. I believe it is the only kind that works.
 ## References
 
 *[To be completed — key sources to incorporate:]*
-
+- 1 https://www.bankrate.com/banking/savings/emergency-savings-report/
 - Klontz, B., & Klontz, T. (2009). *Mind Over Money: Overcoming the Money Disorders That Threaten Our Financial Health.* Broadway Business.
 - Thaler, R. H., & Sunstein, C. R. (2008). *Nudge: Improving Decisions About Health, Wealth, and Happiness.* Yale University Press.
 - Ariely, D. (2008). *Predictably Irrational: The Hidden Forces That Shape Our Decisions.* HarperCollins.
