@@ -35,16 +35,17 @@ const CTASection = () => {
           <div className="relative z-10">
             <Sparkles className="w-8 h-8 text-primary-foreground/80 mx-auto mb-4" />
             <h2 className="font-display text-3xl md:text-4xl font-semibold text-primary-foreground mb-4">
-              Ready to grow your financial garden?
+              Ready to shape the future of financial wellness?
             </h2>
             <p className="text-primary-foreground/80 text-lg max-w-xl mx-auto mb-8">
-              Start as a Seed 🌱, earn XP for every smart money move, and bloom into financial confidence. Your first 100 XP awaits.
+              Your voice matters. Help us build the app that finally gets personal finance right.
             </p>
-            <Button variant="gold" size="lg" asChild>
-              <Link to="/auth" className="gap-2">
-                Start Growing <ArrowRight className="w-4 h-4" />
-              </Link>
-            </Button>
+            <Link
+              to="/survey"
+              className="inline-flex items-center gap-2 rounded-full bg-[hsl(43,60%,54%)] px-8 py-4 font-body font-bold text-white hover:bg-[hsl(43,60%,46%)] hover:scale-105 transition-all duration-200 text-base"
+            >
+              🌱 Take the Survey <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </motion.div>
       </div>

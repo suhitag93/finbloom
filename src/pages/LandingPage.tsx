@@ -4,11 +4,7 @@ import GrowthJourneySection from "@/components/landing/GrowthJourneySection";
 import BadgesPreviewSection from "@/components/landing/BadgesPreviewSection";
 import CTASection from "@/components/landing/CTASection";
 import FooterSection from "@/components/landing/FooterSection";
-import WaitlistBanner from "@/components/WaitlistBanner";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ClipboardList, ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
 
 const LandingPage = () => {
   return (
