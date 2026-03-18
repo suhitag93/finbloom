@@ -76,29 +76,35 @@ const HeroSection = () => {
               <p className="text-lg md:text-xl text-muted-foreground max-w-lg mb-8 leading-relaxed">
                 Grow your financial life like a garden. Earn XP for real money moves, level up through growth stages, and watch your wealth blossom — one habit at a time.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button variant="hero" size="lg" onClick={handleDemoLogin} disabled={demoLoading} className="gap-2">
-                    Plant Your First Seed <ArrowRight className="w-4 h-4" />
-                </Button>
-                <Button variant="hero-outline" size="lg" asChild>
-                  <a href="#how-it-works">See How It Works</a>
-                </Button>
+              <div className="flex flex-col items-start gap-3">
+                <Link
+                  to="/survey"
+                  className="inline-flex items-center gap-2 rounded-full bg-[hsl(43,60%,54%)] px-8 py-4 font-body font-bold text-white hover:bg-[hsl(43,60%,46%)] hover:scale-105 transition-all duration-200 text-base"
+                >
+                  🌱 Help build the app that finally gets it right — takes 5 minutes
+                </Link>
+                <p className="text-sm font-body text-[hsl(0,0%,40%)]">
+                  Completely anonymous · 5 minutes · Your answers shape what gets built
+                </p>
               </div>
 
-              {/* Demo CTA */}
+              {/* Secondary links */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.4 }}
-                className="mt-4"
+                className="mt-4 flex flex-wrap items-center gap-4 text-sm"
               >
                 <button
                   onClick={handleDemoLogin}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1"
+                  className="text-muted-foreground hover:text-primary transition-colors underline underline-offset-2"
                   disabled={demoLoading}
                 >
-                  or → <span className="underline underline-offset-2">See it in action</span> <span className="text-xs">(no signup needed)</span>
+                  See it in action
                 </button>
+                <a href="#how-it-works" className="text-muted-foreground hover:text-primary transition-colors underline underline-offset-2">
+                  How it works
+                </a>
               </motion.div>
 
               {/* XP teaser */}
