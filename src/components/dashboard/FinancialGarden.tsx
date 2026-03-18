@@ -48,7 +48,7 @@ const GrowthEventBanner = ({ event, onDismiss }: { event: GrowthEvent | null; on
 // ─── Main Dashboard Component ────────────────────────────────────────────────
 
 const FinancialGarden = () => {
-  const { currentLevel, totalXP, nextLevel, progress, earnedBadges, streakDays } = useXP();
+  const { currentLevel, totalXP, nextLevel, progress, earnedBadges } = useXP();
   const { completedMissions } = useMissions();
   const { accounts } = useAccounts();
   const [growthEvent, setGrowthEvent] = useState<GrowthEvent | null>(null);
