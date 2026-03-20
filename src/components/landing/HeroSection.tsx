@@ -64,73 +64,26 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground text-sm font-medium mb-6">
-                <Leaf className="w-4 h-4" />
-                Your financial wellness garden
+              <div className="uppercase tracking-widest text-sm font-body font-medium text-[hsl(134,16%,55%)] mb-6">
+                For women who want to feel better about money
               </div>
-              <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-semibold text-foreground leading-[1.1] mb-6">
-                Plant the seeds.{" "}
-                <span className="text-gradient-bloom italic">Watch them bloom.</span>
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-[hsl(0,0%,17%)] leading-[1.15] mb-6">
+                Financial confidence starts with feeling safe enough to look.
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-lg mb-8 leading-relaxed">
-                Grow your financial life like a garden. Earn XP for real money moves, level up through growth stages, and watch your wealth blossom — one habit at a time.
+              <p className="text-base font-body text-[hsl(0,0%,40%)] max-w-[480px] mb-8 leading-relaxed">
+                finBloom is a financial wellness app built around your relationship with money — not just your numbers. We're building it right now, and we want your voice to shape it.
               </p>
               <div className="flex flex-col items-start gap-3">
                 <Link
                   to="/survey"
                   className="inline-flex items-center gap-2 rounded-full bg-[hsl(43,60%,54%)] px-8 py-4 font-body font-bold text-white hover:bg-[hsl(43,60%,46%)] hover:scale-105 transition-all duration-200 text-base"
                 >
-                  🌱 Help build the app that finally gets it right — takes 5 minutes
+                  🌱 Take the 5-minute survey — help us build this
                 </Link>
                 <p className="text-sm font-body text-[hsl(0,0%,40%)]">
                   Completely anonymous · 5 minutes · Your answers shape what gets built
                 </p>
               </div>
-
-              {/* Secondary links */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.4 }}
-                className="mt-4 flex flex-wrap items-center gap-4 text-sm"
-              >
-                <button
-                  onClick={handleDemoLogin}
-                  className="text-muted-foreground hover:text-primary transition-colors underline underline-offset-2"
-                  disabled={demoLoading}
-                >
-                  See it in action
-                </button>
-                <a href="#how-it-works" className="text-muted-foreground hover:text-primary transition-colors underline underline-offset-2">
-                  How it works
-                </a>
-              </motion.div>
-
-              {/* XP teaser */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.5 }}
-                className="mt-6 flex items-center gap-6 text-sm"
-              >
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gold-light text-success-foreground font-medium">
-                  <Zap className="w-3.5 h-3.5" />
-                  +100 XP for signing up
-                </div>
-                <div className="flex items-center gap-4 text-muted-foreground">
-                  <div className="flex -space-x-2">
-                    {[0, 1, 2, 3].map((i) => (
-                      <div
-                        key={i}
-                        className="w-8 h-8 rounded-full border-2 border-background bg-secondary flex items-center justify-center"
-                      >
-                        <Star className="w-3 h-3 text-success" />
-                      </div>
-                    ))}
-                  </div>
-                  <span>2,000+ growing their finances</span>
-                </div>
-              </motion.div>
             </motion.div>
 
             <motion.div
