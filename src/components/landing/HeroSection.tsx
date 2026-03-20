@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { Leaf, Star, Zap } from "lucide-react";
+import { Leaf } from "lucide-react";
 import heroBotanical from "@/assets/hero-botanical.png";
 import FinBloomIcon from "@/components/FinBloomIcon";
 import DemoLoginOverlay from "@/components/DemoLoginOverlay";
