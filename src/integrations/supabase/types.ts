@@ -97,6 +97,30 @@ export type Database = {
         }
         Relationships: []
       }
+      conversations: {
+        Row: {
+          content: string
+          created_at: string | null
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       goal_accounts: {
         Row: {
           account_id: string
@@ -299,6 +323,33 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      knowledge_base: {
+        Row: {
+          category: string | null
+          content: string
+          created_at: string | null
+          embedding: string | null
+          id: string
+          title: string | null
+        }
+        Insert: {
+          category?: string | null
+          content: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          title?: string | null
+        }
+        Update: {
+          category?: string | null
+          content?: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          title?: string | null
+        }
+        Relationships: []
       }
       liabilities: {
         Row: {
@@ -618,6 +669,39 @@ export type Database = {
           },
         ]
       }
+      user_context: {
+        Row: {
+          financial_stage: string | null
+          id: string
+          money_feeling: string[] | null
+          onboarding_answers: Json | null
+          persona_type: string | null
+          primary_goal: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          financial_stage?: string | null
+          id?: string
+          money_feeling?: string[] | null
+          onboarding_answers?: Json | null
+          persona_type?: string | null
+          primary_goal?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          financial_stage?: string | null
+          id?: string
+          money_feeling?: string[] | null
+          onboarding_answers?: Json | null
+          persona_type?: string | null
+          primary_goal?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_missions: {
         Row: {
           completed: boolean
@@ -721,6 +805,19 @@ export type Database = {
           p_xp_amount: number
         }
         Returns: Json
+      }
+      match_knowledge: {
+        Args: {
+          match_count?: number
+          match_threshold?: number
+          query_embedding: string
+        }
+        Returns: {
+          category: string
+          content: string
+          similarity: number
+          title: string
+        }[]
       }
       recalculate_financial_score: {
         Args: { p_user_id: string }
