@@ -48,6 +48,12 @@ const HeroSection = () => {
                 <p className="text-sm font-body text-[hsl(0,0%,40%)]">
                   Completely anonymous · 5 minutes · Your answers shape what gets built
                 </p>
+                <Link
+                  to="/auth?demo=true"
+                  className="text-sm font-body text-muted-foreground underline underline-offset-2 hover:text-primary transition-colors mt-2"
+                >
+                  🌿 Or explore the app first
+                </Link>
               </div>
             </motion.div>
 
