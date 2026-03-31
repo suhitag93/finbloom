@@ -12,3 +12,6 @@ verify_jwt = false
 
 [functions.reset-demo-account]
 verify_jwt = false
+
+[functions.embed-knowledge]
+verify_jwt = false
