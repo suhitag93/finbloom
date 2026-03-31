@@ -331,6 +331,7 @@ export type Database = {
           created_at: string | null
           embedding: string | null
           id: string
+          search_vector: unknown
           title: string | null
         }
         Insert: {
@@ -339,6 +340,7 @@ export type Database = {
           created_at?: string | null
           embedding?: string | null
           id?: string
+          search_vector?: unknown
           title?: string | null
         }
         Update: {
@@ -347,6 +349,7 @@ export type Database = {
           created_at?: string | null
           embedding?: string | null
           id?: string
+          search_vector?: unknown
           title?: string | null
         }
         Relationships: []
@@ -806,19 +809,34 @@ export type Database = {
         }
         Returns: Json
       }
-      match_knowledge: {
-        Args: {
-          match_count?: number
-          match_threshold?: number
-          query_embedding: string
-        }
-        Returns: {
-          category: string
-          content: string
-          similarity: number
-          title: string
-        }[]
-      }
+      match_knowledge:
+        | {
+            Args: {
+              match_count?: number
+              match_threshold?: number
+              query_embedding?: string
+              search_query?: string
+            }
+            Returns: {
+              category: string
+              content: string
+              similarity: number
+              title: string
+            }[]
+          }
+        | {
+            Args: {
+              match_count?: number
+              match_threshold?: number
+              query_embedding: string
+            }
+            Returns: {
+              category: string
+              content: string
+              similarity: number
+              title: string
+            }[]
+          }
       recalculate_financial_score: {
         Args: { p_user_id: string }
         Returns: number
