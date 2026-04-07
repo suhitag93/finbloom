@@ -524,6 +524,30 @@ export type Database = {
         }
         Relationships: []
       }
+      root_state: {
+        Row: {
+          created_at: string
+          id: string
+          sage_calls_today: number
+          sage_reset_date: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          sage_calls_today?: number
+          sage_reset_date?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          sage_calls_today?: number
+          sage_reset_date?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       survey_responses: {
         Row: {
           accounts_held: string[] | null
