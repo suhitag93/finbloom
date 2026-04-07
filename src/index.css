@@ -128,4 +128,27 @@
   .pb-safe {
     padding-bottom: env(safe-area-inset-bottom, 16px);
   }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes sage-drawer-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.animate-sage-drawer-up {
+  animation: sage-drawer-up 380ms cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+@keyframes sage-cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.sage-cursor {
+  animation: sage-cursor-blink 0.9s infinite;
 }
