@@ -96,6 +96,19 @@ const SageChatDrawer = ({ open, onClose }: SageChatDrawerProps) => {
       );
 
       if (!res.ok) {
+        if (res.status === 429) {
+          const body = await res.json();
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.id === sageId
+                ? { ...m, content: "We've had a good run today. Come back tomorrow and we'll keep going. 🌱" }
+                : m
+            )
+          );
+          setDailyLimitReached(true);
+          setIsStreaming(false);
+          return;
+        }
         throw new Error("Chat request failed");
       }
 
