@@ -287,9 +287,10 @@ const SageChatDrawer = ({ open, onClose }: SageChatDrawerProps) => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Talk to Sage..."
+            placeholder={dailyLimitReached ? "Sage is resting for today" : "Talk to Sage..."}
             rows={1}
-            className="flex-1 resize-none rounded-full bg-gray-50 px-4 py-2 text-sm outline-none transition-colors"
+            disabled={dailyLimitReached}
+            className="flex-1 resize-none rounded-full bg-gray-50 px-4 py-2 text-sm outline-none transition-colors disabled:opacity-50"
             style={{
               borderWidth: 1.5,
               borderStyle: "solid",
@@ -298,7 +299,7 @@ const SageChatDrawer = ({ open, onClose }: SageChatDrawerProps) => {
           />
           <button
             onClick={() => sendMessage(input)}
-            disabled={!input.trim() || isStreaming}
+            disabled={!input.trim() || isStreaming || dailyLimitReached}
             className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-all active:scale-95 disabled:opacity-40"
             style={{ background: "#9B89B0" }}
           >
