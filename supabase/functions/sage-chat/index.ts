@@ -44,6 +44,27 @@ serve(async (req) => {
     // Service client for DB reads
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
+    // --- Rate limit: 20 Sage calls per day ---
+    const today = new Date().toISOString().slice(0, 10);
+    const { data: rootState } = await supabase
+      .from("root_state")
+      .select("sage_calls_today, sage_reset_date")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (!rootState) {
+      // First time — create the row
+      await supabase.from("root_state").insert({ user_id: user.id, sage_calls_today: 0, sage_reset_date: today });
+    } else if (rootState.sage_reset_date < today) {
+      // New day — reset counter
+      await supabase.from("root_state").update({ sage_calls_today: 0, sage_reset_date: today }).eq("user_id", user.id);
+    } else if (rootState.sage_calls_today >= 20) {
+      return new Response(
+        JSON.stringify({ error: "daily_limit_reached", message: "You've had a full day of conversations with Sage. Come back tomorrow." }),
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const { message } = await req.json();
     if (!message || typeof message !== "string" || message.trim().length === 0) {
       return new Response(JSON.stringify({ error: "Message is required" }), {
