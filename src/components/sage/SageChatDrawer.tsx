@@ -222,8 +222,8 @@ const SageChatDrawer = ({ open, onClose }: SageChatDrawerProps) => {
                 style={
                   msg.role === "sage"
                     ? {
-                        background: "#F0EBF7",
-                        color: "#3C3489",
+                        background: "#EAF2EB",
+                        color: "#2D4A32",
                         borderRadius: "4px 18px 18px 18px",
                       }
                     : {
