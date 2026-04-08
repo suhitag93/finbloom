@@ -41,6 +41,46 @@ serve(async (req) => {
       });
     }
 
+    // Parse body once and validate
+    const body = await req.json();
+    const messages = body?.messages;
+
+    if (!messages || !Array.isArray(messages)) {
+      return new Response("Invalid request", {
+        status: 400,
+        headers: corsHeaders,
+      });
+    }
+
+    const lastUserMsg = [...messages].reverse().find((m: { role: string }) => m.role === "user");
+    if (!lastUserMsg) {
+      return new Response("Invalid request", {
+        status: 400,
+        headers: corsHeaders,
+      });
+    }
+
+    if (typeof lastUserMsg.content === "string" && lastUserMsg.content.length > 500) {
+      return new Response(
+        JSON.stringify({
+          error: "message_too_long",
+          message: "Please keep messages under 500 characters.",
+        }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    const message = typeof lastUserMsg.content === "string" ? lastUserMsg.content : "";
+    if (message.trim().length === 0) {
+      return new Response(JSON.stringify({ error: "Message is required" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     // Service client for DB reads
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
@@ -53,24 +93,14 @@ serve(async (req) => {
       .maybeSingle();
 
     if (!rootState) {
-      // First time — create the row
       await supabase.from("root_state").insert({ user_id: user.id, sage_calls_today: 0, sage_reset_date: today });
     } else if (rootState.sage_reset_date < today) {
-      // New day — reset counter
       await supabase.from("root_state").update({ sage_calls_today: 0, sage_reset_date: today }).eq("user_id", user.id);
     } else if (rootState.sage_calls_today >= 20) {
       return new Response(
         JSON.stringify({ error: "daily_limit_reached", message: "You've had a full day of conversations with Sage. Come back tomorrow." }),
         { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
-    }
-
-    const { message } = await req.json();
-    if (!message || typeof message !== "string" || message.trim().length === 0) {
-      return new Response(JSON.stringify({ error: "Message is required" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
     }
 
     // 1. Fetch user context for personalization
