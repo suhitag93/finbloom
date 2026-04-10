@@ -22,8 +22,15 @@ const queryClient = new QueryClient();
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
   if (loading) return null;
-  if (!user) return <Navigate to="/auth" replace />;
+  if (!user) return <Navigate to="/" replace />;
   return <>{children}</>;
+};
+
+const PublicLanding = () => {
+  const { user, loading } = useAuth();
+  if (loading) return null;
+  if (user) return <Navigate to="/dashboard" replace />;
+  return <LandingPage />;
 };
 
 /** Mobile app shell with bottom nav + scrollable content */
@@ -47,7 +54,7 @@ const AppLayout = () => {
     <>
       {!hideNav && <Navbar />}
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<PublicLanding />} />
         <Route path="/survey" element={<Survey />} />
         <Route path="/auth" element={<Auth />} />
         <Route
