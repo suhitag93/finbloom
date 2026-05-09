@@ -60,9 +60,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Exchange public_token for access_token via Plaid API
-    // Using Plaid Sandbox by default — change to production URL when ready
-    const plaidBaseUrl = "https://sandbox.plaid.com";
+    const plaidBaseUrl = Deno.env.get("PLAID_BASE_URL") ?? "https://sandbox.plaid.com";
 
     const exchangeResponse = await fetch(`${plaidBaseUrl}/item/public_token/exchange`, {
       method: "POST",

@@ -1,0 +1,11 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# SPA fallback — React Router handles all client-side routes.
+# Without this, direct navigation to /dashboard, /survey, etc. returns a 404
+# from the Netlify CDN before the app ever loads.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

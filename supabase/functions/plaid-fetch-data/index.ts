@@ -59,7 +59,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const plaidBaseUrl = "https://sandbox.plaid.com";
+    const plaidBaseUrl = Deno.env.get("PLAID_BASE_URL") ?? "https://sandbox.plaid.com";
     const access_token = connection.access_token;
 
     // Fetch accounts
