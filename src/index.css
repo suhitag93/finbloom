@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Sage green primary */
+    --primary: 152 22% 58%;
+    --primary-foreground: 40 20% 98%;
+
+    /* Warm cream background */
+    --background: 36 33% 96%;
+    --foreground: 200 15% 20%;
+
+    /* Cards slightly lighter */
+    --card: 36 33% 98%;
+    --card-foreground: 200 15% 20%;
+
+    --popover: 36 33% 98%;
+    --popover-foreground: 200 15% 20%;
+
+    /* Lavender accent */
+    --accent: 245 30% 73%;
+    --accent-foreground: 245 40% 20%;
+
+    /* Secondary — soft muted sage */
+    --secondary: 152 15% 92%;
+    --secondary-foreground: 152 22% 30%;
+
+    --muted: 36 15% 92%;
+    --muted-foreground: 200 10% 46%;
+
+    /* Gold success */
+    --success: 43 87% 62%;
+    --success-foreground: 43 60% 15%;
+
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 36 15% 88%;
+    --input: 36 15% 88%;
+    --ring: 152 22% 58%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens */
+    --sage-light: 152 20% 95%;
+    --sage-dark: 152 25% 35%;
+    --lavender-light: 245 30% 95%;
+    --cream-dark: 36 20% 90%;
+    --gold-light: 43 87% 90%;
+
+    /* Gradients */
+    --gradient-sage: linear-gradient(135deg, hsl(152 22% 58%), hsl(152 30% 45%));
+    --gradient-bloom: linear-gradient(135deg, hsl(152 22% 58%), hsl(245 30% 73%));
+    --gradient-warm: linear-gradient(180deg, hsl(36 33% 96%), hsl(36 20% 92%));
+    --gradient-gold: linear-gradient(135deg, hsl(43 87% 62%), hsl(35 80% 55%));
+
+    /* Shadows */
+    --shadow-soft: 0 2px 12px -2px hsl(152 22% 58% / 0.12);
+    --shadow-card: 0 4px 24px -4px hsl(200 15% 20% / 0.06);
+    --shadow-glow: 0 0 20px hsl(152 22% 58% / 0.2);
+
+    /* Bottom nav */
+    --bottom-nav: 0 0% 98%;
+    --bottom-nav-border: 220 13% 91%;
+
+    --sidebar-background: 152 15% 97%;
+    --sidebar-foreground: 200 15% 20%;
+    --sidebar-primary: 152 22% 58%;
+    --sidebar-primary-foreground: 40 20% 98%;
+    --sidebar-accent: 152 15% 92%;
+    --sidebar-accent-foreground: 152 22% 30%;
+    --sidebar-border: 152 12% 90%;
+    --sidebar-ring: 152 22% 58%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    font-size: 14px;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .text-gradient-sage {
+    background: var(--gradient-sage);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-bloom {
+    background: var(--gradient-bloom);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .bg-gradient-sage {
+    background: var(--gradient-sage);
+  }
+  .bg-gradient-bloom {
+    background: var(--gradient-bloom);
+  }
+  .bg-gradient-warm {
+    background: var(--gradient-warm);
+  }
+  .bg-gradient-gold {
+    background: var(--gradient-gold);
+  }
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes sage-drawer-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.animate-sage-drawer-up {
+  animation: sage-drawer-up 380ms cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+@keyframes sage-cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.sage-cursor {
+  animation: sage-cursor-blink 0.9s infinite;
+}

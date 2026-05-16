@@ -1,0 +1,1 @@
+ALTER TABLE public.survey_responses ADD COLUMN biggest_difference text NULL;
