@@ -202,7 +202,7 @@ ${knowledgeContext}`;
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "google/gemini-3-flash-preview",
+          model: "claude-haiku-4-5-20251001",
           messages: aiMessages,
           stream: true,
         }),
